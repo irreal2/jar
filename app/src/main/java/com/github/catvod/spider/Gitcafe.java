@@ -90,7 +90,7 @@ public class Gitcafe extends Spider {
                         jSONObject2.put("vod_id", sb2);
                         String string2 = jSONObject.getString("title");
                         jSONObject2.put("vod_name", string2);
-                        jSONObject2.put("vod_pic", "https://s1.ax1x.com/2022/06/27/jVJZCR.jpg");
+                        jSONObject2.put("vod_pic", "https://www.lgstatic.com/i/image2/M01/15/7E/CgoB5lysLXCADg6ZAABapAHUnQM321.jpg");
                         jSONArray.put(jSONObject2);
                     }
                 }
@@ -132,7 +132,7 @@ public class Gitcafe extends Spider {
                     String group = matcher.group(1);
                     if (allData.containsKey(group)) {
                         JSONObject jSONObject3 = (JSONObject) allData.get(group);
-                        jSONObject2.put("vod_pic", "https://s1.ax1x.com/2022/06/27/jVJZCR.jpg");
+                        jSONObject2.put("vod_pic", "https://www.lgstatic.com/i/image2/M01/15/7E/CgoB5lysLXCADg6ZAABapAHUnQM321.jpg");
 
                     }
                 }
@@ -158,7 +158,9 @@ public class Gitcafe extends Spider {
                     for (Iterator<String> iter = b.iterator(); iter.hasNext(); ) {
                         String element = iter.next();
                         String content = OkHttpUtil.string("https://gitcafe.net/alipaper/data/" + element + ".json", LT);
+//                        JSONObject data = new JSONObject(content);
                         JSONArray jSONArray = new JSONArray(content);
+ //      data.getJSONArray("data");
                         for (int i = 0; i < jSONArray.length(); i++) {
                             JSONObject jSONObject = jSONArray.getJSONObject(i);
                             hashMap.put(jSONObject.getString("key"), jSONObject);
@@ -189,7 +191,7 @@ public class Gitcafe extends Spider {
 
     @Override
     public String homeContent(boolean z) {
-        String str = "https://s1.ax1x.com/2022/06/27/jVJZCR.jpg";
+        String str = "https://www.lgstatic.com/i/image2/M01/15/7E/CgoB5lysLXCADg6ZAABapAHUnQM321.jpg";
 
         try {
             JSONObject homeData = getHomeData(this);
