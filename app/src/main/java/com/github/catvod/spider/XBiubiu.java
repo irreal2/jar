@@ -510,7 +510,7 @@ public class XBiubiu extends Spider {
             return true; 
         } 
      
-        private String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".mpg", ".flv", ".m4a",".mp3", ".wma", ".wmv", ".asf", ".avi", ".mkv"}; 
+        private String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"}; 
      
         @Override 
         public boolean isVideoFormat(String url) { 
