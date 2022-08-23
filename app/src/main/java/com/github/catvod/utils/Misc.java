@@ -103,8 +103,7 @@ public class Misc {
         if (url.startsWith("//")) {
             url = "https:" + url;
         }
-        if (!url.startsWith("http")) {
-            return null;
+        if (!url.startsWith("http")) {            
         }
         if (url.equals(input)) {
             if (isVip(url) || !isVideoFormat(url)) {
