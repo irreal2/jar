@@ -205,10 +205,10 @@ public class XBiubiu extends Spider {
                 String jiequshuzuhou = getRuleVal("bfjiequshuzuhou");
                 boolean bfyshifouercijiequ = getRuleVal("bfyshifouercijiequ").equals("1");
                 ArrayList<String> jiequContents = subContent(parseContent, jiequshuzuqian, jiequshuzuhou);
-                boolean magnet = false;
+                boolean isMagnet = false;
                 for (int i = 0; i < jiequContents.size(); i++) {
                     try {
-                        if (magnet) {
+                        if (isMagnet) {
                             break;
                         }
                         String jiequContent = jiequContents.get(i);
@@ -225,7 +225,7 @@ public class XBiubiu extends Spider {
                             vodItems.add(title + "$" + link);
                             if (link.startsWith("magnet")) {
                             playList.add(title + "$" + link);
-                            magnet = true;
+                            isMagnet = true;
                             break;
                             }
                         }
@@ -297,7 +297,8 @@ public class XBiubiu extends Spider {
             vod.put("vod_content", desc);
 	       ArrayList<String> playFrom = new ArrayList<>();
            String xlparseContent = html;
-           if (playList[0].contains("magnet")){
+           String pList = playList[0].toStrimg();
+           if (pList.contains("magnet")){
                playFrom.add("磁力链接");
            } else {
                if(getRuleVal("xlbiaotiqian").isEmpty() && getRuleVal("xlbiaotihou").isEmpty()){
