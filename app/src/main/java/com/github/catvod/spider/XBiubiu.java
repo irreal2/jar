@@ -188,7 +188,7 @@ public class XBiubiu extends Spider {
         try {
             fetchRule();
             String[] idInfo = ids.get(0).split("\\$\\$\\$");
-            String webUrl = (idInfo[2].startsWith("x:") | idInfo[2].startsWith("http") | idInfo[2].startsWith("magnet")) ? idInfo[2] : getRuleVal("url") + idInfo[2];
+            String webUrl = (idInfo[2].startsWith("x:") || idInfo[2].startsWith("http") || idInfo[2].startsWith("magnet")) ? idInfo[2] : getRuleVal("url") + idInfo[2];
             String html = fetch(webUrl.startsWith("x:") ? webUrl.substring(2) : webUrl);
             String parseContent = html;
             boolean bfshifouercijiequ = getRuleVal("bfshifouercijiequ").equals("1");
