@@ -474,7 +474,8 @@ public class PushAgent extends Spider {
                 list.put(vodAtom);
                 result.put("list", list);
                 return result.toString();
-            } else if (url.startsWith("magnet:")) {
+            } else if (url.contains("magnet:")) {
+                url = url.replaceAll("[\\S\\s]*(magnet\\S+)", "$1");
                 String name = "";
                 Matcher matcher = Pattern.compile("(^|&)dn=([^&]*)(&|$)").matcher(URLDecoder.decode(url));
                 if (matcher.find()) {

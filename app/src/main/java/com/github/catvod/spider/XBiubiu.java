@@ -189,7 +189,7 @@ public class XBiubiu extends Spider {
             fetchRule();
             String[] idInfo = ids.get(0).split("\\$\\$\\$");
             String webUrl = (idInfo[2].startsWith("x:") || idInfo[2].startsWith("http") || idInfo[2].startsWith("magnet")) ? idInfo[2] : getRuleVal("url") + idInfo[2];
-            String html = fetch(webUrl.startsWith("x:") ? webUrl.substring(2) : webUrl);
+            String html = fetch((webUrl.startsWith("x:") || webUrl.startsWith("http") || webUrl.startsWith("magnet")) ? webUrl.substring(2) : webUrl);
             String parseContent = html;
             boolean bfshifouercijiequ = getRuleVal("bfshifouercijiequ").equals("1");
             if (bfshifouercijiequ) {
@@ -335,7 +335,7 @@ public class XBiubiu extends Spider {
     public String playerContent(String flag, String id, List<String> vipFlags) {
         try {
             fetchRule();
-            String webUrl = id.startsWith("x:") ? id.substring(2) : getRuleVal("url") + id;
+            String webUrl = (id.startsWith("x:") || id.startsWith("http") || id.startsWith("magnet")) ? id.substring(2) : getRuleVal("url") + id;
             JSONObject result = new JSONObject();
             result.put("parse", 1);
             result.put("playUrl", "");
@@ -520,7 +520,7 @@ public class XBiubiu extends Spider {
             } 
             for (String format : videoFormatList) { 
                 if (url.contains(format)) { 
-                    if ((url.contains("cdn-tos") && (url.contains(".js") || url.contains(".css"))) || url.contains(".jpg") || url.contains(".png") || url.contains(".gif")) {
+                    if (url.contains(".js") || url.contains(".css") || url.contains(".jpg") || url.contains(".png") || url.contains(".gif") || url.contains(".ico") || url.contains("rl=") || url.contains(".html")) {
                         return false;
                     } else {
                         return true;
