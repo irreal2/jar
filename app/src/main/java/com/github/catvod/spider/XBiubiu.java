@@ -297,7 +297,7 @@ public class XBiubiu extends Spider {
             vod.put("vod_content", desc);
 	       ArrayList<String> playFrom = new ArrayList<>();
            String xlparseContent = html;
-           if (idInfo[2].startsWith("magnet")){
+           if (playList[0].contains("magnet")){
                playFrom.add("磁力链接");
            } else {
                if(getRuleVal("xlbiaotiqian").isEmpty() && getRuleVal("xlbiaotihou").isEmpty()){
