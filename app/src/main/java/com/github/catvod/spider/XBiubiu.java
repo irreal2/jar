@@ -240,7 +240,7 @@ public class XBiubiu extends Spider {
                 playList.add(idInfo[0] + "$" + idInfo[2]);																			  
             }
 		   
-            String cover = idInfo[1], title = idInfo[0], desc = "", category = "", area = "", year = "", remark = "", director = "", actor = "";
+            String cover = idInfo[1], title = idInfo[0], mId = idInfo[2], desc = "", category = "", area = "", year = "", remark = "", director = "", actor = "";
 
             if (!getRuleVal("leixinqian").isEmpty() && !getRuleVal("leixinhou").isEmpty()) {
                 try {
@@ -297,10 +297,16 @@ public class XBiubiu extends Spider {
             vod.put("vod_content", desc);
 	       ArrayList<String> playFrom = new ArrayList<>();
            String xlparseContent = html;
-           String pList = playList[0].toString();
-           if (pList.contains("magnet")){
-               playFrom.add("磁力链接");
-           } else {
+           if (mId.startsWith("magnet")){
+            vod.put("vod_play_from", "磁力链接");
+            vod.put("vod_play_url", mId);
+
+            JSONObject result = new JSONObject();
+            JSONArray list = new JSONArray();
+            list.put(vod);
+            result.put("list", list);
+            return result.toString();
+              } else {
                if(getRuleVal("xlbiaotiqian").isEmpty() && getRuleVal("xlbiaotihou").isEmpty()){
            
                    for (int i = 0; i < playList.size(); i++) {
