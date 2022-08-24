@@ -220,7 +220,7 @@ public class XBiubiu extends Spider {
                                 link = bfqianzhui + link;
                             }
                             vodItems.add(title + "$" + link);
-                            if (link.startsWith("magnet") {
+                            if (link.startsWith("magnet")) {
                                 isMagnet = true;
                                 break;
                             }
@@ -236,7 +236,7 @@ public class XBiubiu extends Spider {
 
             } else {
                 playList.add(idInfo[0] + "$" + idInfo[2]);
-                if (idInfo[2].startsWith("magnet") {
+                if (idInfo[2].startsWith("magnet")) {
                     isMagnet = true;
                 }																		  
             }
