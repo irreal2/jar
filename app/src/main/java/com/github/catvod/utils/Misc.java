@@ -43,7 +43,7 @@ public class Misc {
 
     public static boolean isVideoFormat(String url) {
         if (snifferMatch.matcher(url).find()) {
-            if (url.contains(".js") || url.contains(".css") || url.contains(".jpg") || url.contains(".png") || url.contains(".gif") || url.contains(".ico") || url.contains("rl=") || url.contains(".html")) {
+            if ((url.contains("cdn-tos") && (url.contains(".js") || url.contains(".css"))) || url.contains(".jpg") || url.contains(".ico") || url.contains(".png") || url.contains(".gif")) {
                 return false;
             }
             return true;
