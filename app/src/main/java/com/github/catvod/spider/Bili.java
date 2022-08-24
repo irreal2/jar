@@ -93,8 +93,8 @@ public class Bili extends Spider {
     public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             String url = "https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword=";
-            if (extend != null && extend.size() > 0 && extend.containsKey("tid") && extend.get("tid").length() > 0) {
-                url += extend.get("tid");
+            if (extend != null && extend.size() > 0 && extend.containsKey("typeid") && extend.get("typeid").length() > 0) {
+                url += extend.get("typeid");
             } else {
                 url += tid;
             }
