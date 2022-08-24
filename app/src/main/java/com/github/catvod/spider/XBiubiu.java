@@ -135,7 +135,7 @@ public class XBiubiu extends Spider {
                     }
                     pic = Misc.fixUrl(webUrl, pic);
                     String link = subContent(jiequContent, getRuleVal("lianjieqian"), getRuleVal("lianjiehou")).get(0);
-                    link = getRuleVal("ljqianzhui").isEmpty() ? (link + getRuleVal("ljhouzhui")) : (getRuleVal("ljqianzhui") + link + getRuleVal("ljhouzhui"));
+                    link = getRuleVal("ljqianzhui").isEmpty() ? (link + getRuleVal("ljhouzhui")) : (getRuleVal("ljqianzhui")) + link + getRuleVal("ljhouzhui");
                     String remark = !getRuleVal("fubiaotiqian").isEmpty() && !getRuleVal("fubiaotihou").isEmpty() ?
                             removeHtml(subContent(jiequContent, getRuleVal("fubiaotiqian"), getRuleVal("fubiaotihou")).get(0)) : "";
                     JSONObject v = new JSONObject();
@@ -191,7 +191,6 @@ public class XBiubiu extends Spider {
             String webUrl = (idInfo[2].startsWith("http") || idInfo[2].startsWith("magnet")) ? idInfo[2] : getRuleVal("url") + idInfo[2];
             String html = fetch(webUrl);
             String parseContent = html;
-            boolean isMagnet = false;
             boolean bfshifouercijiequ = getRuleVal("bfshifouercijiequ").equals("1");
             if (bfshifouercijiequ) {
                 String jiequqian = getRuleVal("bfjiequqian");
@@ -200,6 +199,7 @@ public class XBiubiu extends Spider {
             }
 
             ArrayList<String> playList = new ArrayList<>();
+            boolean isMagnet = false;
             boolean playDirect = getRuleVal("直接播放").equals("1");
             if (!playDirect) {
                 String jiequshuzuqian = getRuleVal("bfjiequshuzuqian");
@@ -220,26 +220,25 @@ public class XBiubiu extends Spider {
                                 link = bfqianzhui + link;
                             }
                             vodItems.add(title + "$" + link);
-                            if (link.startsWith("magnet")) {
-                            isMagnet = true;
-                            break;
+                            if (link.startsWith("magnet") {
+                                isMagnet = true;
+                                break;
                             }
                         }
-
                         playList.add(TextUtils.join("#", vodItems));
                         if (isMagnet) {
                             break;
-                        }
+                            }
                     } catch (Throwable th) {
                         th.printStackTrace();
                     }		  
                 }
 
             } else {
-                playList.add(idInfo[0] + "$" + idInfo[2]);									                     if (idInfo[2].startsWith("magnet")){
-                isMagnet = true;
-                }
-
+                playList.add(idInfo[0] + "$" + idInfo[2]);
+                if (idInfo[2].startsWith("magnet") {
+                    isMagnet = true;
+                }																		  
             }
 		   
             String cover = idInfo[1], title = idInfo[0], desc = "", category = "", area = "", year = "", remark = "", director = "", actor = "";
@@ -299,12 +298,12 @@ public class XBiubiu extends Spider {
             vod.put("vod_content", desc);
 	       ArrayList<String> playFrom = new ArrayList<>();
            String xlparseContent = html;
-           if(getRuleVal("xlbiaotiqian").isEmpty() && getRuleVal("xlbiaotihou").isEmpty() && !isMagnet){
+           if(getRuleVal("xlbiaotiqian").isEmpty() && getRuleVal("xlbiaotihou").isEmpty()){
            
                for (int i = 0; i < playList.size(); i++) {
                    playFrom.add("播放列表" + (i + 1));
                }
-            } else if(!isMagnet){
+           }else{
            
                boolean xlshifouercijiequ = getRuleVal("xlshifouercijiequ").equals("1");
                if (xlshifouercijiequ) {
@@ -326,10 +325,7 @@ public class XBiubiu extends Spider {
                    }
                }           
            
-            } else {
-               playFrom.add("磁力链接");
-            }
-        }
+           }
             String vod_play_from = TextUtils.join("$$$", playFrom);
             String vod_play_url = TextUtils.join("$$$", playList);
             vod.put("vod_play_from", vod_play_from);
@@ -340,9 +336,9 @@ public class XBiubiu extends Spider {
             list.put(vod);
             result.put("list", list);
             return result.toString();
-       } catch (Exception e) {
+        } catch (Exception e) {
             SpiderDebug.log(e);
-       }
+        }
         return "";
     }
 
@@ -382,7 +378,7 @@ public class XBiubiu extends Spider {
                     String pic = vod.optString(getRuleVal("jspic")).trim();
                     pic = Misc.fixUrl(webUrl, pic);
                     String link = getRuleVal("sousuohouzhui") + id;
-                    link = getRuleVal("ssljqianzhui").isEmpty() ? (link + getRuleVal("ssljhouzhui")) : (getRuleVal("ssljqianzhui") + link + getRuleVal("ssljhouzhui"));
+                    link = getRuleVal("ssljqianzhui").isEmpty() ? (link + getRuleVal("ssljhouzhui")) : (getRuleVal("ssljqianzhui")) + link + getRuleVal("ssljhouzhui");
                     JSONObject v = new JSONObject();
                     v.put("vod_id", name + "$$$" + pic + "$$$" + link);
                     v.put("vod_name", name);
@@ -408,7 +404,7 @@ public class XBiubiu extends Spider {
                         String pic = subContent(jiequContent, getRuleVal("sstupianqian"), getRuleVal("sstupianhou")).get(0);
                         pic = Misc.fixUrl(webUrl, pic);
                         String link = subContent(jiequContent, getRuleVal("sslianjieqian"), getRuleVal("sslianjiehou")).get(0);
-                        link = getRuleVal("ssljqianzhui").isEmpty() ? (link + getRuleVal("ssljhouzhui")) : (getRuleVal("ssljqianzhui") + link + getRuleVal("ssljhouzhui"));
+                        link = getRuleVal("ssljqianzhui").isEmpty() ? (link + getRuleVal("ssljhouzhui")) : (getRuleVal("ssljqianzhui")) + link + getRuleVal("ssljhouzhui");
                         String remark = "";
                         if (!getRuleVal("ssfubiaotiqian").isEmpty() && !getRuleVal("ssfubiaotihou").isEmpty()) {
                             try {
