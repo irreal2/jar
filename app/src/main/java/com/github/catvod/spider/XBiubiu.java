@@ -208,9 +208,6 @@ public class XBiubiu extends Spider {
                 ArrayList<String> jiequContents = subContent(parseContent, jiequshuzuqian, jiequshuzuhou);
                 for (int i = 0; i < jiequContents.size(); i++) {
                     try {
-                        if (isMagnet) {
-                            break;
-                        }
                         String jiequContent = jiequContents.get(i);
                         String parseJqContent = bfyshifouercijiequ ? subContent(jiequContent, getRuleVal("bfyjiequqian"), getRuleVal("bfyjiequhou")).get(0) : jiequContent;
                         ArrayList<String> lastParseContents = subContent(parseJqContent, getRuleVal("bfyjiequshuzuqian"), getRuleVal("bfyjiequshuzuhou"));
@@ -224,13 +221,15 @@ public class XBiubiu extends Spider {
                             }
                             vodItems.add(title + "$" + link);
                             if (link.startsWith("magnet")) {
-                            playList.add(title + "$" + link);
                             isMagnet = true;
                             break;
                             }
                         }
 
                         playList.add(TextUtils.join("#", vodItems));
+                        if (isMagnet) {
+                            break;
+                        }
                     } catch (Throwable th) {
                         th.printStackTrace();
                     }		  
@@ -239,11 +238,11 @@ public class XBiubiu extends Spider {
             } else {
                 playList.add(idInfo[0] + "$" + idInfo[2]);									                     if (idInfo[2].startsWith("magnet")){
                 isMagnet = true;
-              }
+                }
 
             }
 		   
-            String cover = idInfo[1], title = idInfo[0], mId = idInfo[2], desc = "", category = "", area = "", year = "", remark = "", director = "", actor = "";
+            String cover = idInfo[1], title = idInfo[0], desc = "", category = "", area = "", year = "", remark = "", director = "", actor = "";
 
             if (!getRuleVal("leixinqian").isEmpty() && !getRuleVal("leixinhou").isEmpty()) {
                 try {
@@ -305,7 +304,7 @@ public class XBiubiu extends Spider {
                for (int i = 0; i < playList.size(); i++) {
                    playFrom.add("播放列表" + (i + 1));
                }
-           } else if(!isMagnet){
+            } else if(!isMagnet){
            
                boolean xlshifouercijiequ = getRuleVal("xlshifouercijiequ").equals("1");
                if (xlshifouercijiequ) {
@@ -327,10 +326,10 @@ public class XBiubiu extends Spider {
                    }
                }           
            
-           } else {
+            } else {
                playFrom.add("磁力链接");
-           }
-       }
+            }
+        }
             String vod_play_from = TextUtils.join("$$$", playFrom);
             String vod_play_url = TextUtils.join("$$$", playList);
             vod.put("vod_play_from", vod_play_from);
@@ -341,9 +340,9 @@ public class XBiubiu extends Spider {
             list.put(vod);
             result.put("list", list);
             return result.toString();
-        } catch (Exception e) {
+       } catch (Exception e) {
             SpiderDebug.log(e);
-        }
+       }
         return "";
     }
 
