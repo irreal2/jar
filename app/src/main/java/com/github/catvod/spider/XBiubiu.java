@@ -328,7 +328,7 @@ public class XBiubiu extends Spider {
                }           
            
            } else {
-               playFrom.add("磁力链接")
+               playFrom.add("磁力链接");
            }
        }
             String vod_play_from = TextUtils.join("$$$", playFrom);
