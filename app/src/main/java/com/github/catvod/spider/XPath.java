@@ -439,7 +439,7 @@ public class XPath extends Spider {
         }
         for (String format : videoFormatList) {
             if (url.contains(format)) {
-                if (url.contains(".js") || url.contains(".css") || url.contains(".jpg") || url.contains(".png") || url.contains(".gif") || url.contains(".ico") || url.contains("rl=") || url.contains(".html")) {
+                if ((url.contains("cdn-tos") && (url.contains(".js") || url.contains(".css"))) || url.contains(".jpg") || url.contains(".ico") || url.contains(".png") || url.contains(".gif")) {
                     return false;
                 } else {
                     return true;
