@@ -389,7 +389,7 @@ public class XPath extends Spider {
                             String mark = vod.optString(rule.getSearchVodMark()).trim();
                             mark = rule.getSearchVodMarkR(mark);
                             JSONObject v = new JSONObject();
-                            v.put("vod_id", id);
+                            v.put("vod_id", name + "$$$" + pic + "$$$" + id);
                             v.put("vod_name", name);
                             v.put("vod_pic", pic);
                             v.put("vod_remarks", mark);
@@ -420,7 +420,7 @@ public class XPath extends Spider {
                         }
                     }
                     JSONObject v = new JSONObject();
-                    v.put("vod_id", id);
+                    v.put("vod_id", name + "$$$" + pic + "$$$" + id);
                     v.put("vod_name", name);
                     v.put("vod_pic", pic);
                     v.put("vod_remarks", mark);
