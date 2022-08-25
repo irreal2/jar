@@ -20,6 +20,10 @@ public class XPathRule {
      */
     private String homeUrl;
     /**
+     * 是否直接播放
+     */
+    private String directPlay;
+    /**
      * 分类节点 xpath
      */
     private String cateNode;
@@ -137,19 +141,19 @@ public class XPathRule {
     /**
      * 详情 视频名 xpath
      */
-    private String dtName;
+//    private String dtName;
     /**
      * 正则对取到的数据进行二次处理
      */
-    private Pattern dtNameR;
+//    private Pattern dtNameR;
     /**
      * 详情视频图片 xpath
      */
-    private String dtImg;
+//    private String dtImg;
     /**
      * 正则对取到的数据进行二次处理
      */
-    private Pattern dtImgR;
+//    private Pattern dtImgR;
     /**
      * 详情视频分类 xpath
      */
@@ -327,6 +331,7 @@ public class XPathRule {
             JSONObject jsonObj = new JSONObject(json);
             XPathRule rule = new XPathRule();
             rule.ua = jsonObj.optString("ua");
+            rule.directPlay = jsonObj.optString("directPlay").trim();
             rule.homeUrl = jsonObj.optString("homeUrl").trim();
             rule.cateNode = jsonObj.optString("cateNode").trim();
             rule.cateName = jsonObj.optString("cateName").trim();
@@ -363,10 +368,12 @@ public class XPathRule {
             rule.cateVodMarkR = getPattern(jsonObj, "cateVodMarkR");
             rule.dtUrl = jsonObj.optString("dtUrl");
             rule.dtNode = jsonObj.optString("dtNode");
+/*
             rule.dtName = jsonObj.optString("dtName");
             rule.dtNameR = getPattern(jsonObj, "dtNameR");
             rule.dtImg = jsonObj.optString("dtImg");
             rule.dtImgR = getPattern(jsonObj, "dtImgR");
+*/
             rule.dtCate = jsonObj.optString("dtCate");
             rule.dtCateR = getPattern(jsonObj, "dtCateR");
             rule.dtYear = jsonObj.optString("dtYear");
@@ -415,6 +422,10 @@ public class XPathRule {
 
     public String getHomeUrl() {
         return homeUrl;
+    }
+
+    public String getDirectPlay() {
+        return directPlay;
     }
 
     public String getCateNode() {
@@ -528,7 +539,7 @@ public class XPathRule {
     public String getDetailNode() {
         return dtNode;
     }
-
+/*
     public String getDetailName() {
         return dtName;
     }
@@ -544,7 +555,7 @@ public class XPathRule {
     public String getDetailImgR(String src) {
         return doReplaceRegex(dtImgR, src);
     }
-
+*/
     public String getDetailCate() {
         return dtCate;
     }
