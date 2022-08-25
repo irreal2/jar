@@ -303,17 +303,14 @@ public class XBiubiu extends Spider {
                for (int i = 0; i < playList.size(); i++) {
                    playFrom.add("播放列表" + (i + 1));
                }
-           }else{
-           
-               boolean xlshifouercijiequ = getRuleVal("xlshifouercijiequ").isEmpty() ? false : getRuleVal("xlshifouercijiequ").equals("1");
+           }else{        
+               boolean xlshifouercijiequ = getRuleVal("xlshifouercijiequ").equals("1");
                if (xlshifouercijiequ) {
                    String xljiequqian = getRuleVal("xljiequqian");
                    String xljiequhou = getRuleVal("xljiequhou");
                    xlparseContent = subContent(html, xljiequqian, xljiequhou).get(0);
-               } else {
-                   xlparseContent = html;
                }
-            
+
                String xljiequshuzuqian = getRuleVal("xljiequshuzuqian");
                String xljiequshuzuhou = getRuleVal("xljiequshuzuhou");
                ArrayList<String> xljiequContents = subContent(xlparseContent, xljiequshuzuqian, xljiequshuzuhou);
