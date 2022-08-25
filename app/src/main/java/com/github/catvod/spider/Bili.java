@@ -23,12 +23,19 @@ import java.util.List;
 public class Bili extends Spider {
 
     protected JSONObject ext = null;
+    
+    protected HashMap<String, String> getUa() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("cookie", "buvid3=666");
+        hashMap.put("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36");
+        return hashMap;
+    }
 
     @Override
     public void init(Context context, String extend) {
         super.init(context, extend);
         try {
-            String content = OkHttpUtil.string(extend, null);
+            String content = OkHttpUtil.string(extend, getUa());
             ext = new JSONObject(content);
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -55,7 +62,7 @@ public class Bili extends Spider {
             JSONArray videos = new JSONArray();
             try {
                 String url = "https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword=窗 白噪音";
-                String content = OkHttpUtil.string(url, null);
+                String content = OkHttpUtil.string(url, getUa());
                 JSONObject data = new JSONObject(content).getJSONObject("data");
                 JSONArray RArray = data.getJSONArray("result");
                 for (int i = 0; i < RArray.length(); i++) {
@@ -93,8 +100,8 @@ public class Bili extends Spider {
     public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             String url = "https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword=";
-            if (extend != null && extend.size() > 0 && extend.containsKey("typeid") && extend.get("typeid").length() > 0) {
-                url += extend.get("typeid");
+            if (extend != null && extend.size() > 0 && extend.containsKey("tid") && extend.get("tid").length() > 0) {
+                url += extend.get("tid");
             } else {
                 url += tid;
             }
@@ -108,7 +115,7 @@ public class Bili extends Spider {
                 }
             }
             url += "&page=" + pg;
-            String content = OkHttpUtil.string(url, null);
+            String content = OkHttpUtil.string(url, getUa());
             JSONObject data = new JSONObject(content).getJSONObject("data");
             JSONArray list = new JSONArray();
             JSONArray RSArray = data.getJSONArray("result");
@@ -154,12 +161,12 @@ public class Bili extends Spider {
         try {
             String str = ids.get(0);
             String sb2 = "https://api.bilibili.com/x/web-interface/archive/stat?bvid=" + str;
-            JSONObject jSONObject = new JSONObject(OkHttpUtil.string(sb2, null));
+            JSONObject jSONObject = new JSONObject(OkHttpUtil.string(sb2, getUa()));
             JSONObject jSONObject2 = jSONObject.getJSONObject("data");
             long j = jSONObject2.getLong("aid");
             String sb4 = j + "";
             String sb6 = "https://api.bilibili.com/x/web-interface/view?aid=" + sb4;
-            JSONObject jSONObject3 = new JSONObject(OkHttpUtil.string(sb6, null));
+            JSONObject jSONObject3 = new JSONObject(OkHttpUtil.string(sb6, getUa()));
             JSONObject jSONObject4 = jSONObject3.getJSONObject("data");
             JSONObject v = new JSONObject();
             v.put("vod_id", str);
@@ -218,7 +225,7 @@ public class Bili extends Spider {
             String str3 = split[0];
             String str4 = split[1];
             String sb2 = "https://api.bilibili.com/x/player/playurl?avid=" + str3 + "&cid= " + str4 + "&qn=120&fourk=1";
-            JSONObject jSONObject = new JSONObject(OkHttpUtil.string(sb2, null));
+            JSONObject jSONObject = new JSONObject(OkHttpUtil.string(sb2, getUa()));
             JSONObject jSONObject2 = new JSONObject();
             jSONObject2.put("parse", "0");
             jSONObject2.put("playUrl", "");
@@ -240,7 +247,7 @@ public class Bili extends Spider {
         try {
             JSONObject result = new JSONObject();
             String url = "https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword=" + URLEncoder.encode(key);
-            String content = OkHttpUtil.string(url, null);
+            String content = OkHttpUtil.string(url, getUa());
             JSONObject data = new JSONObject(content).getJSONObject("data");
             JSONArray videos = new JSONArray();
             JSONArray RSArray = data.getJSONArray("result");
