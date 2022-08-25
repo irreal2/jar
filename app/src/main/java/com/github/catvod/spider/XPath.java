@@ -85,7 +85,7 @@ public class XPath extends Spider {
                                 }
                             }
                             JSONObject v = new JSONObject();
-                            v.put("vod_id", id);
+                            v.put("vod_id", name + "$$$" + pic + "$$$" + id);
                             v.put("vod_name", name);
                             v.put("vod_pic", pic);
                             v.put("vod_remarks", mark);
@@ -159,7 +159,7 @@ public class XPath extends Spider {
                     }
                 }
                 JSONObject v = new JSONObject();
-                v.put("vod_id", id);
+                v.put("vod_id", name + "$$$" + pic + "$$$" + id);
                 v.put("vod_name", name);
                 v.put("vod_pic", pic);
                 v.put("vod_remarks", mark);
@@ -186,18 +186,15 @@ public class XPath extends Spider {
     public String detailContent(List<String> ids) {
         try {
             fetchRule();
-            String webUrl = rule.getDetailUrl().replace("{vid}", ids.get(0));
+            String[] idInfo = ids.get(0).split("\\$\\$\\$");
+            String webUrl = rule.getDetailUrl().replace("{vid}", idInfo[2]);
             String webContent = fetch(webUrl);
             JXDocument doc = JXDocument.create(webContent);
             JXNode vodNode = doc.selNOne(rule.getDetailNode());
 
-            String cover = "", title = "", desc = "", category = "", area = "", year = "", remark = "", director = "", actor = "";
+            String cover = "", title = idInfo[0], desc = "", category = "", area = "", year = "", remark = "", director = "", actor = "";
 
-            title = vodNode.selOne(rule.getDetailName()).asString().trim();
-            title = rule.getDetailNameR(title);
-
-            cover = vodNode.selOne(rule.getDetailImg()).asString().trim();
-            cover = rule.getDetailImgR(cover);
+            cover = idInfo[1];
             cover = Misc.fixUrl(webUrl, cover);
 
             if (!rule.getDetailCate().isEmpty()) {
@@ -213,7 +210,7 @@ public class XPath extends Spider {
                     year = vodNode.selOne(rule.getDetailYear()).asString().trim();
                     year = rule.getDetailYearR(year);
                 } catch (Exception e) {
-                    SpiderDebug.log(e);
+                   SpiderDebug.log(e);
                 }
             }
             if (!rule.getDetailArea().isEmpty()) {
@@ -258,7 +255,7 @@ public class XPath extends Spider {
             }
 
             JSONObject vod = new JSONObject();
-            vod.put("vod_id", ids.get(0));
+            vod.put("vod_id", idInfo[2]);
             vod.put("vod_name", title);
             vod.put("vod_pic", cover);
             vod.put("type_name", category);
@@ -269,45 +266,60 @@ public class XPath extends Spider {
             vod.put("vod_director", director);
             vod.put("vod_content", desc);
 
+            boolean directPlay = false;
+            if (!rule.getDirectPlay().isEmpty() && (rule.getDirectPlay().equals("true") || rule.getDirectPlay().equals("1") )) {
+                directPlay = true;
+        }
             ArrayList<String> playFrom = new ArrayList<>();
-
-            List<JXNode> fromNodes = doc.selN(rule.getDetailFromNode());
-            for (int i = 0; i < fromNodes.size(); i++) {
-                String name = fromNodes.get(i).selOne(rule.getDetailFromName()).asString().trim();
-                name = rule.getDetailFromNameR(name);
-                playFrom.add(name);
-            }
-
             ArrayList<String> playList = new ArrayList<>();
-            List<JXNode> urlListNodes = doc.selN(rule.getDetailUrlNode());
-            for (int i = 0; i < urlListNodes.size(); i++) {
-                List<JXNode> urlNodes = urlListNodes.get(i).sel(rule.getDetailUrlSubNode());
-                List<String> vodItems = new ArrayList<>();
-                for (int j = 0; j < urlNodes.size(); j++) {
-                    String name = urlNodes.get(j).selOne(rule.getDetailUrlName()).asString().trim();
-                    name = rule.getDetailUrlNameR(name);
-                    String id = urlNodes.get(j).selOne(rule.getDetailUrlId()).asString().trim();
-                    id = rule.getDetailUrlIdR(id);
-                    vodItems.add(name + "$" + id);
+
+            if (!directPlay) {
+                List<JXNode> fromNodes = doc.selN(rule.getDetailFromNode());
+                for (int i = 0; i < fromNodes.size(); i++) {
+                    String name = fromNodes.get(i).selOne(rule.getDetailFromName()).asString().trim();
+                    name = rule.getDetailFromNameR(name);
+                    playFrom.add(name);
+                }
+
+                List<JXNode> urlListNodes = doc.selN(rule.getDetailUrlNode());
+                boolean isMagnet = false;
+                for (int i = 0; i < urlListNodes.size(); i++) {
+                    List<JXNode> urlNodes = urlListNodes.get(i).sel(rule.getDetailUrlSubNode());
+                    List<String> vodItems = new ArrayList<>();
+                    for (int j = 0; j < urlNodes.size(); j++) {
+                        String name = urlNodes.get(j).selOne(rule.getDetailUrlName()).asString().trim();
+                        name = rule.getDetailUrlNameR(name);
+                        String id = urlNodes.get(j).selOne(rule.getDetailUrlId()).asString().trim();
+                        id = rule.getDetailUrlIdR(id);
+                        vodItems.add(name + "$" + id);
+                        if (id.starsWith("magnet")) {
+                            isMagnet = true;
+                            break;
+                        }
+                    }
+                    // 排除播放列表为空的播放源
+                    if (vodItems.size() == 0 && playFrom.size() > i) {
+                        playFrom.set(i, "");
+                    }
+                    playList.add(TextUtils.join("#", vodItems));
+                    if (isMagnet) break;
                 }
                 // 排除播放列表为空的播放源
-                if (vodItems.size() == 0 && playFrom.size() > i) {
-                    playFrom.set(i, "");
+                for (int i = playFrom.size() - 1; i >= 0; i--) {
+                    if (playFrom.get(i).isEmpty())
+                        playFrom.remove(i);
                 }
-                playList.add(TextUtils.join("#", vodItems));
-            }
-            // 排除播放列表为空的播放源
-            for (int i = playFrom.size() - 1; i >= 0; i--) {
-                if (playFrom.get(i).isEmpty())
-                    playFrom.remove(i);
-            }
-            for (int i = playList.size() - 1; i >= 0; i--) {
-                if (playList.get(i).isEmpty())
-                    playList.remove(i);
-            }
-            for (int i = playList.size() - 1; i >= 0; i--) {
-                if (i >= playFrom.size())
-                    playList.remove(i);
+                for (int i = playList.size() - 1; i >= 0; i--) {
+                    if (playList.get(i).isEmpty())
+                        playList.remove(i);
+                }
+                for (int i = playList.size() - 1; i >= 0; i--) {
+                    if (i >= playFrom.size())
+                        playList.remove(i);
+                }
+            } else {
+                playFrom.add("播放列表");
+                playList.add(idInfo[0] + "$" + webUrl);
             }
             String vod_play_from = TextUtils.join("$$$", playFrom);
             String vod_play_url = TextUtils.join("$$$", playList);
