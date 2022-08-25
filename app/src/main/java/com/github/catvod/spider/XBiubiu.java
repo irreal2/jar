@@ -305,11 +305,13 @@ public class XBiubiu extends Spider {
                }
            }else{
            
-               boolean xlshifouercijiequ = getRuleVal("xlshifouercijiequ").equals("1");
+               boolean xlshifouercijiequ = getRuleVal("xlshifouercijiequ").isEmpty() ? false : getRuleVal("xlshifouercijiequ").equals("1");
                if (xlshifouercijiequ) {
                    String xljiequqian = getRuleVal("xljiequqian");
                    String xljiequhou = getRuleVal("xljiequhou");
                    xlparseContent = subContent(html, xljiequqian, xljiequhou).get(0);
+               } else {
+                   xlparseContent = html;
                }
             
                String xljiequshuzuqian = getRuleVal("xljiequshuzuqian");
