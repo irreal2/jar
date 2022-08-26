@@ -130,13 +130,16 @@ public class XPath extends Spider {
     }
 
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", currentPg(pg));
+        return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", pg);
     }
 
     @Override
     public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
+            if (!rule.getStartPage().isEmpty() && (rule.getStartPage().equals("0") || rule.getStartPage().equals("2"))) {
+            pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(rule.getStartPage()));
+        }
             String webUrl = categoryUrl(tid, pg, filter, extend);
             JSONArray videos = new JSONArray();
             JXDocument doc = JXDocument.create(fetch(webUrl));
@@ -488,10 +491,5 @@ public class XPath extends Spider {
         return OkHttpUtil.string(webUrl, getHeaders(webUrl));
     }
 
-    protected String currentPg(String pg) {
-        if (!rule.getStartPage().isEmpty() && (rule.getStartPage().equals("0") || rule.getStartPage().equals("2"))) {
-        pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(rule.getStartPage()));
-        }
-        return pg;
     }
 }
