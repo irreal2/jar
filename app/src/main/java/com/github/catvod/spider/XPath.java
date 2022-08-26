@@ -130,7 +130,7 @@ public class XPath extends Spider {
     }
 
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", currentPg(pg));
+        return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", pg);
     }
 
     @Override
