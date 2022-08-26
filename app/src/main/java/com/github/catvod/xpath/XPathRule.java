@@ -20,6 +20,10 @@ public class XPathRule {
      */
     private String homeUrl;
     /**
+     * 起始页码
+     */
+    private String startPage;
+    /**
      * 是否直接播放
      */
     private String directPlay;
@@ -315,6 +319,7 @@ public class XPathRule {
             JSONObject jsonObj = new JSONObject(json);
             XPathRule rule = new XPathRule();
             rule.ua = jsonObj.optString("ua");
+            rule.directPlay = jsonObj.optString("startPage").trim();
             rule.directPlay = jsonObj.optString("directPlay").trim();
             rule.homeUrl = jsonObj.optString("homeUrl").trim();
             rule.cateNode = jsonObj.optString("cateNode").trim();
@@ -400,6 +405,10 @@ public class XPathRule {
 
     public String getHomeUrl() {
         return homeUrl;
+    }
+
+    public String getStartPage() {
+        return startPage;
     }
 
     public String getDirectPlay() {
