@@ -138,8 +138,8 @@ public class XPath extends Spider {
         try {
             fetchRule();
             if (!rule.getStartPage().isEmpty() && (rule.getStartPage().equals("0") || rule.getStartPage().equals("2"))) {
-            pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(rule.getStartPage()));
-        }
+            pg = String.valueOf(Integer.parseInt(pg) + Integer.parseInt(rule.getStartPage()) - 1);
+            }
             String webUrl = categoryUrl(tid, pg, filter, extend);
             JSONArray videos = new JSONArray();
             JXDocument doc = JXDocument.create(fetch(webUrl));
@@ -491,5 +491,4 @@ public class XPath extends Spider {
         return OkHttpUtil.string(webUrl, getHeaders(webUrl));
     }
 
-    }
 }
