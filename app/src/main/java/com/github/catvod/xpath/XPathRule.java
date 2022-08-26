@@ -319,7 +319,7 @@ public class XPathRule {
             JSONObject jsonObj = new JSONObject(json);
             XPathRule rule = new XPathRule();
             rule.ua = jsonObj.optString("ua");
-            rule.directPlay = jsonObj.optString("startPage").trim();
+            rule.startPage = jsonObj.optString("startPage").trim();
             rule.directPlay = jsonObj.optString("directPlay").trim();
             rule.homeUrl = jsonObj.optString("homeUrl").trim();
             rule.cateNode = jsonObj.optString("cateNode").trim();
