@@ -138,7 +138,7 @@ public class XPath extends Spider {
         try {
             fetchRule();
             String startPg = rule.getStartPage();
-            if (startPg.equals("0") || startPg.equals("2")) {
+            if (!startPg.isEmpty()) {
             pg = String.valueOf(Integer.parseInt(pg) + Integer.parseInt(startPg) - 1);
             }
             String webUrl = categoryUrl(tid, pg, filter, extend);
