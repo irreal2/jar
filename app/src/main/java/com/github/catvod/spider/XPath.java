@@ -130,14 +130,14 @@ public class XPath extends Spider {
     }
 
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", pg);
+        return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", currentPg(pg));
     }
 
     @Override
     public String categoryContent(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
-            String webUrl = categoryUrl(tid, currentPg(pg), filter, extend);
+            String webUrl = categoryUrl(tid, pg, filter, extend);
             JSONArray videos = new JSONArray();
             JXDocument doc = JXDocument.create(fetch(webUrl));
             List<JXNode> vodNodes = doc.selN(rule.getCateVodNode());
@@ -166,7 +166,7 @@ public class XPath extends Spider {
                 videos.put(v);
             }
             JSONObject result = new JSONObject();
-            result.put("page", currentPg(pg));
+            result.put("page", pg);
             result.put("pagecount", Integer.MAX_VALUE);
             result.put("limit", 90);
             result.put("total", Integer.MAX_VALUE);
