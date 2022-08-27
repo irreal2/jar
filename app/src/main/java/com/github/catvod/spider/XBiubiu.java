@@ -64,7 +64,7 @@ public class XBiubiu extends Spider {
             JSONArray classes = new JSONArray();
             String[] cates = getRuleVal("fenlei", "").split("#");
             if (filter && isFilter) 
-                String[] cates = getCate().split("#");
+                cates = getCate().split("#");
 
             for (String cate : cates) {
                 String[] info = cate.split("\\$");
