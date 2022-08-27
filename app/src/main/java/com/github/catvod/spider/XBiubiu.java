@@ -37,7 +37,10 @@ public class XBiubiu extends Spider {
     boolean isFilter = false;
     private JSONObject filterConfig;
 
-
+    /**
+     * 首页开关
+     */
+    boolean isHome = false;
 
     @Override
     public void init(Context context) {
@@ -64,7 +67,7 @@ public class XBiubiu extends Spider {
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
             String[] cates = getRuleVal("fenlei", "").split("#");
-            if (isFilter) {
+            if (isFilter || getRuleVal("fenlei").isEmpty()) {
                 cates = getCate().split("#");
             }
             for (String cate : cates) {
@@ -100,24 +103,9 @@ public class XBiubiu extends Spider {
         try {
             fetchRule();
             if (getRuleVal("shouye").equals("1")) {
-                JSONArray videos = new JSONArray();
-                String[] fenleis = getRuleVal("fenlei", "").split("#");
-                for (String fenlei : fenleis) {
-                    String[] info = fenlei.split("\\$");
-                    JSONObject data = category(info[1], "1", false, new HashMap<>());
-                    if (data != null) {
-                        JSONArray vids = data.optJSONArray("list");
-                        if (vids != null) {
-                            for (int i = 0; i < vids.length() && i < 5; i++) {
-                                videos.put(vids.getJSONObject(i));
-                            }
-                        }
-                    }
-                    if (videos.length() >= 30)
-                        break;
-                }
-                JSONObject result = new JSONObject();
-                result.put("list", videos);
+                isHome = true;
+                JSONObject result =  category(tid, pg, false, extend);
+                isHome = false;
                 return result.toString();
             }
         } catch (Exception e) {
@@ -158,12 +146,11 @@ public class XBiubiu extends Spider {
             else if (!qishiye.equals("nil")) {
                 pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
             }
-            String webUrl;
-            if (isFilter) {
+            String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
+            if (isFilter || getRuleVal("fenlei").isEmpty()) {
             webUrl = categoryUrl(tid, pg, filter, extend);
-            } else {
-            webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
             }
+            if (isHome) webUrl = getRuleVal("url");
             String html = fetch(webUrl);
             html = removeUnicode(html);
             String parseContent = html;
