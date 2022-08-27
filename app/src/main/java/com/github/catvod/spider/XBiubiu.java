@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.net.URLEncoder;
+import java.util.Iterator;
 
 import okhttp3.Call;
 
@@ -74,7 +75,7 @@ public class XBiubiu extends Spider {
             }
             result.put("class", classes);
             if (filter && isFilter)
-                results.put("filters", filterConfig);
+                result.put("filters", filterConfig);
 
             return result.toString();
         } catch (
@@ -537,10 +538,10 @@ public class XBiubiu extends Spider {
         String numCate = "电影\\$1#连续剧\\$2#综艺\\$3#动漫\\$4";
         String pyCate = "电影\\$dianying#连续剧\\$lianxuju#综艺\\$zongyi#动漫\\$dongman";
         String enCate = "电影\\$mov#连续剧\\$tv#综艺\\$zongyi#动漫\\$acg";
-        String auffix = "", type = cate;
+        String suffix = "", type = cate;
         if (cate.contains("\\|\\|")) {
             type = cate.split("\\|\\|")[0];
-            suffix = "#" + type[1];
+            suffix = "#" + cate.split("\\|\\|")[1];
         }
         switch (type) {
             case "数字": return numCate + suffix;
