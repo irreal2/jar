@@ -58,7 +58,7 @@ public class XBiubiu extends Spider {
     public String homeContent(boolean filter) {
         try {
             fetchRule();
-            isFilter = !getRuleVal("筛选").isEmpty() && getRuleVal("筛选").equals("1")
+            isFilter = !getRuleVal("筛选").isEmpty() && getRuleVal("筛选").equals("1");
 
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
