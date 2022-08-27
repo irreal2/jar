@@ -536,7 +536,7 @@ public class XBiubiu extends Spider {
     }
 
     private String getCate() {
-        String cate = getRuleVal("大类", "");
+        String cate = getRuleVal("大类");
         String numCate = "电影$1#连续剧$2#综艺$3#动漫$4";
         String pyCate = "电影$dianying#连续剧$lianxuju#综艺$zongyi#动漫$dongman";
         String enCate = "电影$mov#连续剧$tv#综艺$zongyi#动漫$acg";
@@ -544,13 +544,11 @@ public class XBiubiu extends Spider {
         try {
             if (cate.isEmpty()){
                 return numCate;
-            } else if (cate.contains("\\$") && !cate.contains("\\|\\|")) {
+            } else if (cate.contains("$") && !cate.contains("||")) {
                 return cate;
-            } else if (cate.contains("\\|\\|")) {
+            } else if (cate.contains("||")) {
                 type = cate.split("\\|\\|")[0];
                 suffix = "#" + cate.split("\\|\\|")[1];
-            } else {
-                suffix = "";
             }
             switch (type) {
                 case "数字": return numCate + suffix;
