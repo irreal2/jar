@@ -128,7 +128,7 @@ public class XBiubiu extends Spider {
 
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        String cateUrl = getRuleVal("cateUrl");
+        String cateUrl = getRuleVal("分类页");
         if (filter && isFilter && extend != null && extend.size() > 0) {
             for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
@@ -138,7 +138,7 @@ public class XBiubiu extends Spider {
                 }
             }
         }
-        cateUrl = cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
+        cateUrl = cateUrl.replace("大类", tid).replace("页码", pg);
         Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
         while (m.find()) {
             String n = m.group(0).replace("{", "").replace("}", "");
@@ -536,10 +536,10 @@ public class XBiubiu extends Spider {
     }
 
     private String getCate() {
-        String cate = getRuleVal("cateId", "");
-        String numCate = "电影\\$1#连续剧\\$2#综艺\\$3#动漫\\$4";
-        String pyCate = "电影\\$dianying#连续剧\\$lianxuju#综艺\\$zongyi#动漫\\$dongman";
-        String enCate = "电影\\$mov#连续剧\\$tv#综艺\\$zongyi#动漫\\$acg";
+        String cate = getRuleVal("大类", "");
+        String numCate = "电影$1#连续剧$2#综艺$3#动漫$4";
+        String pyCate = "电影$dianying#连续剧$lianxuju#综艺$zongyi#动漫$dongman";
+        String enCate = "电影$mov#连续剧$tv#综艺$zongyi#动漫$acg";
         String suffix = "", type = cate;
         try {
             if (cate.isEmpty()){
