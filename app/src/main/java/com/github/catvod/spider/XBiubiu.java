@@ -104,7 +104,7 @@ public class XBiubiu extends Spider {
             fetchRule();
             if (getRuleVal("shouye").equals("1")) {
                 isHome = true;
-                JSONObject result =  category(tid, pg, false, extend);
+                JSONObject result =  category("", "", false, new HashMap<>());
                 isHome = false;
                 return result.toString();
             }
@@ -191,10 +191,12 @@ public class XBiubiu extends Spider {
                 }
             }
             JSONObject result = new JSONObject();
-            result.put("page", pg);
-            result.put("pagecount", Integer.MAX_VALUE);
-            result.put("limit", 90);
-            result.put("total", Integer.MAX_VALUE);
+            if (!isHome) {
+                result.put("page", pg);
+                result.put("pagecount", Integer.MAX_VALUE);
+                result.put("limit", 90);
+                result.put("total", Integer.MAX_VALUE);
+            }
             result.put("list", videos);
             return result;
         } catch (Exception e) {
