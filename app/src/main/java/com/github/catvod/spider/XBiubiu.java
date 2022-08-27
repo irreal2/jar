@@ -19,14 +19,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.net.URLEncoder;
 
 import okhttp3.Call;
 
 public class XBiubiu extends Spider {
 
+    /**
+     * 分类配置
+     */
+    private JSONObject cateConfig;
+
+    /**
+     * 筛选配置
+     */
+    private JSONObject filterConfig;
+
+
+
     @Override
     public void init(Context context) {
         super.init(context);
+        try {
+            playerConfig = new JSONObject("{\"duoduozy\":{\"show\":\"高清线路\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"sohu\":{\"show\":\"优选7\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"qq\":{\"show\":\"优选3\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"bilibili\":{\"show\":\"bilibili\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"youku\":{\"show\":\"优选1\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"qiyi\":{\"show\":\"优选2\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"letv\":{\"show\":\"优选6\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"xigua\":{\"show\":\"西瓜视频\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"mgtv\":{\"show\":\"优选4\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"tkm3u8\":{\"show\":\"备用\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"pptv\":{\"show\":\"优选5\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"}}");
+            filterConfig = new JSONObject("{\"1\":[{\"key\":\"小类\",\"name\":\"类型\",\"value\":[{\"n\":\"全部\",\"v\":\"1\"},{\"n\":\"动作片\",\"v\":\"6\"},{\"n\":\"喜剧片\",\"v\":\"7\"},{\"n\":\"爱情片\",\"v\":\"8\"},{\"n\":\"科幻片\",\"v\":\"9\"},{\"n\":\"恐怖片\",\"v\":\"10\"},{\"n\":\"剧情片\",\"v\":\"11\"},{\"n\":\"战争片\",\"v\":\"12\"},{\"n\":\"犯罪片\",\"v\":\"20\"},{\"n\":\"惊悚片\",\"v\":\"21\"},{\"n\":\"冒险片\",\"v\":\"22\"},{\"n\":\"悬疑片\",\"v\":\"23\"},{\"n\":\"武侠片\",\"v\":\"24\"},{\"n\":\"奇幻片\",\"v\":\"25\"},{\"n\":\"纪录片\",\"v\":\"26\"},{\"n\":\"动画片\",\"v\":\"27\"}]},{\"key\":\"地区\",\"name\":\"地区\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"大陆\",\"v\":\"大陆\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"法国\",\"v\":\"法国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"德国\",\"v\":\"德国\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"印度\",\"v\":\"印度\"},{\"n\":\"意大利\",\"v\":\"意大利\"},{\"n\":\"西班牙\",\"v\":\"西班牙\"},{\"n\":\"加拿大\",\"v\":\"加拿大\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"年份\",\"name\":\"年份\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"},{\"n\":\"2009\",\"v\":\"2009\"},{\"n\":\"2008\",\"v\":\"2008\"},{\"n\":\"2007\",\"v\":\"2007\"},{\"n\":\"2006\",\"v\":\"2006\"},{\"n\":\"2005\",\"v\":\"2005\"},{\"n\":\"2004\",\"v\":\"2004\"},{\"n\":\"2003\",\"v\":\"2003\"},{\"n\":\"2002\",\"v\":\"2002\"},{\"n\":\"2001\",\"v\":\"2001\"},{\"n\":\"2000\",\"v\":\"2000\"}]}],\"2\":[{\"key\":\"小类\",\"name\":\"类型\",\"value\":[{\"n\":\"全部\",\"v\":\"2\"},{\"n\":\"国产剧\",\"v\":\"13\"},{\"n\":\"港台剧\",\"v\":\"14\"},{\"n\":\"日韩剧\",\"v\":\"15\"},{\"n\":\"欧美剧\",\"v\":\"16\"},{\"n\":\"泰国剧\",\"v\":\"28\"}]},{\"key\":\"地区\",\"name\":\"地区\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"大陆\",\"v\":\"大陆\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"法国\",\"v\":\"法国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"德国\",\"v\":\"德国\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"印度\",\"v\":\"印度\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"年份\",\"name\":\"年份\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"},{\"n\":\"2009\",\"v\":\"2009\"},{\"n\":\"2008\",\"v\":\"2008\"},{\"n\":\"2007\",\"v\":\"2007\"},{\"n\":\"2006\",\"v\":\"2006\"},{\"n\":\"2005\",\"v\":\"2005\"},{\"n\":\"2004\",\"v\":\"2004\"},{\"n\":\"2003\",\"v\":\"2003\"},{\"n\":\"2002\",\"v\":\"2002\"},{\"n\":\"2001\",\"v\":\"2001\"},{\"n\":\"2000\",\"v\":\"2000\"}]}],\"4\":[{\"key\":\"小类\",\"name\":\"剧情\",\"value\":[{\"n\":\"全部\",\"v\":\"3\"},{\"n\":\"情感\",\"v\":\"情感\"},{\"n\":\"科幻\",\"v\":\"科幻\"},{\"n\":\"热血\",\"v\":\"热血\"},{\"n\":\"推理\",\"v\":\"推理\"},{\"n\":\"搞笑\",\"v\":\"搞笑\"},{\"n\":\"冒险\",\"v\":\"冒险\"},{\"n\":\"萝莉\",\"v\":\"萝莉\"},{\"n\":\"校园\",\"v\":\"校园\"},{\"n\":\"动作\",\"v\":\"动作\"},{\"n\":\"机战\",\"v\":\"机战\"},{\"n\":\"运动\",\"v\":\"运动\"},{\"n\":\"战争\",\"v\":\"战争\"},{\"n\":\"少年\",\"v\":\"少年\"},{\"n\":\"少女\",\"v\":\"少女\"},{\"n\":\"社会\",\"v\":\"社会\"},{\"n\":\"原创\",\"v\":\"原创\"},{\"n\":\"亲子\",\"v\":\"亲子\"},{\"n\":\"益智\",\"v\":\"益智\"},{\"n\":\"励志\",\"v\":\"励志\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"地区\",\"name\":\"地区\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"内地\",\"v\":\"内地\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"新加坡\",\"v\":\"新加坡\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"年份\",\"name\":\"年份\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"},{\"n\":\"2009\",\"v\":\"2009\"},{\"n\":\"2008\",\"v\":\"2008\"},{\"n\":\"2007\",\"v\":\"2007\"},{\"n\":\"2006\",\"v\":\"2006\"},{\"n\":\"2005\",\"v\":\"2005\"},{\"n\":\"2004\",\"v\":\"2004\"},{\"n\":\"2003\",\"v\":\"2003\"},{\"n\":\"2002\",\"v\":\"2002\"},{\"n\":\"2001\",\"v\":\"2001\"},{\"n\":\"2000\",\"v\":\"2000\"}]}]}");
+        } catch (JSONException e) {
+            SpiderDebug.log(e);
+        }
     }
 
     public void init(Context context, String extend) {
@@ -40,15 +59,21 @@ public class XBiubiu extends Spider {
             fetchRule();
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
-            String[] fenleis = getRuleVal("fenlei", "").split("#");
-            for (String fenlei : fenleis) {
-                String[] info = fenlei.split("\\$");
+            String[] cates = getRuleVal("fenlei", "").split("#");
+            if (filter) 
+                String[] cates = getCate().split("#");
+
+            for (String cate : cates) {
+                String[] info = cate.split("\\$");
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("type_name", info[0]);
                 jsonObject.put("type_id", info[1]);
                 classes.put(jsonObject);
             }
             result.put("class", classes);
+            if (filter)
+                results.put("filters", filterConfig);
+
             return result.toString();
         } catch (
                 Exception e) {
@@ -97,6 +122,27 @@ public class XBiubiu extends Spider {
         return "";
     }
 
+//获取分类页网址
+    protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
+        String cateUrl = getRuleVal("分类页网址");
+        if (filter && extend != null && extend.size() > 0) {
+            for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
+                String key = it.next();
+                String value = extend.get(key);
+                if (value.length() > 0) {
+                    cateUrl = cateUrl.replace("{" + key + "}", URLEncoder.encode(value));
+                }
+            }
+        }
+        cateUrl = cateUrl.replace("大类", tid).replace("页码", pg);
+        Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
+        while (m.find()) {
+            String n = m.group(0).replace("{", "").replace("}", "");
+            cateUrl = cateUrl.replace(m.group(0), "").replace("/" + n + "/", "");
+        }
+        return cateUrl;
+    }
+
     private JSONObject category(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
@@ -109,6 +155,10 @@ public class XBiubiu extends Spider {
                 pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
             }
             String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
+
+            if (filter)
+            webUrl = categoryUrl(tid, pg, filter, extend);
+
             String html = fetch(webUrl);
             html = removeUnicode(html);
             String parseContent = html;
@@ -478,6 +528,24 @@ public class XBiubiu extends Spider {
         if (v.isEmpty() || v.equals("空"))
             return defaultVal;
         return v;
+    }
+
+    private String getCate() {
+        String cate = getRuleVal("大类", "")
+        String numCate = "电影$1#连续剧$2#综艺$3#动漫$4"
+        String pyCate = "电影$dianying#连续剧$lianxuju#综艺$zongyi#动漫$dongman"
+        String enCate = "电影$mov#连续剧$tv#综艺$zongyi#动漫$acg"
+        if (cate.contains("||")) {
+            String[] type = cate.split("||");
+            String suffix = "#" + type[1];
+        } else {
+            suffix = "";
+        }
+        switch (type[0]) {
+            case "数字": return numCate + suffix;
+            case "拼音": return pyCate + suffix;
+            case "英文": return enCate + suffix;
+        }
     }
 
     private String getRuleVal(String key) {
