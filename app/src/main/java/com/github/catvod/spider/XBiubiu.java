@@ -58,13 +58,13 @@ public class XBiubiu extends Spider {
     public String homeContent(boolean filter) {
         try {
             fetchRule();
-            if (!getRuleVal("筛选").isEmpty()) {
-                isFilter = getRuleVal("筛选").equals("1");
+            if (!getRuleVal("filter").isEmpty()) {
+                isFilter = getRuleVal("filter").equals("1");
             }
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
             String[] cates = getRuleVal("fenlei", "").split("#");
-            if (filter && isFilter) {
+            if (isFilter) {
                 cates = getCate().split("#");
             }
             for (String cate : cates) {
@@ -128,7 +128,7 @@ public class XBiubiu extends Spider {
 
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        String cateUrl = getRuleVal("分类页网址");
+        String cateUrl = getRuleVal("cateUrl");
         if (filter && isFilter && extend != null && extend.size() > 0) {
             for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
@@ -138,7 +138,7 @@ public class XBiubiu extends Spider {
                 }
             }
         }
-        cateUrl = cateUrl.replace("大类", tid).replace("页码", pg);
+        cateUrl = cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
         Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
         while (m.find()) {
             String n = m.group(0).replace("{", "").replace("}", "");
@@ -159,7 +159,7 @@ public class XBiubiu extends Spider {
                 pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
             }
             String webUrl;
-            if (filter && isFilter) {
+            if (isFilter) {
             webUrl = categoryUrl(tid, pg, filter, extend);
             } else {
             webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
@@ -536,7 +536,7 @@ public class XBiubiu extends Spider {
     }
 
     private String getCate() {
-        String cate = getRuleVal("大类", "");
+        String cate = getRuleVal("cateId", "");
         String numCate = "电影\\$1#连续剧\\$2#综艺\\$3#动漫\\$4";
         String pyCate = "电影\\$dianying#连续剧\\$lianxuju#综艺\\$zongyi#动漫\\$dongman";
         String enCate = "电影\\$mov#连续剧\\$tv#综艺\\$zongyi#动漫\\$acg";
