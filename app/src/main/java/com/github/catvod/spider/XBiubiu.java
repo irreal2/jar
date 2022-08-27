@@ -157,11 +157,11 @@ public class XBiubiu extends Spider {
             else if (!qishiye.equals("nil")) {
                 pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
             }
-
+            String webUrl;
             if (filter && isFilter) {
             webUrl = categoryUrl(tid, pg, filter, extend);
             } else {
-            String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
+            webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
             }
             String html = fetch(webUrl);
             html = removeUnicode(html);
