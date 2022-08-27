@@ -356,7 +356,7 @@ public class XPath extends Spider {
                JSONObject headers = new JSONObject();
                headers.put("User-Agent",rule.getPlayUa());
                result.put("header",headers.toString());
-               System.out.printIn(result);
+               System.out.println(result);
                //result.put("ua", rule.getPlayUa());
             }
             result.put("url", webUrl);

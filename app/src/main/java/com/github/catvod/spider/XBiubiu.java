@@ -393,11 +393,11 @@ public class XBiubiu extends Spider {
             JSONObject result = new JSONObject();
             result.put("parse", 1);
             result.put("playUrl", "");
-            if（!rule.getPlayUa().isEmpty()）{
+            if（!getRuleVal("playUa").isEmpty()）{
                JSONObject headers = new JSONObject();
                headers.put("User-Agent",getRuleVal("playUa"));
                result.put("header",headers.toString());
-               System.out.printIn(result);
+               System.out.println(result);
                //result.put("ua", rule.getPlayUa());
             }
             result.put("url", webUrl);
