@@ -58,14 +58,15 @@ public class XBiubiu extends Spider {
     public String homeContent(boolean filter) {
         try {
             fetchRule();
-            isFilter = !getRuleVal("筛选").isEmpty() && getRuleVal("筛选").equals("1");
-
+            if (!getRuleVal("筛选").isEmpty()) {
+                isFilter = getRuleVal("筛选").equals("1");
+            }
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
             String[] cates = getRuleVal("fenlei", "").split("#");
-            if (filter && isFilter) 
+            if (filter && isFilter) {
                 cates = getCate().split("#");
-
+            }
             for (String cate : cates) {
                 String[] info = cate.split("\\$");
                 JSONObject jsonObject = new JSONObject();
@@ -74,9 +75,9 @@ public class XBiubiu extends Spider {
                 classes.put(jsonObject);
             }
             result.put("class", classes);
-            if (filter && isFilter)
+            if (filter) {
                 result.put("filters", filterConfig);
-
+            }
             return result.toString();
         } catch (
                 Exception e) {
@@ -541,14 +542,21 @@ public class XBiubiu extends Spider {
         String enCate = "电影\\$mov#连续剧\\$tv#综艺\\$zongyi#动漫\\$acg";
         String suffix = "", type = cate;
         try {
-            if (cate.contains("\\|\\|")) {
+            if (cate.isEmpty()){
+                return numCate;
+            } else if (cate.contains("\\$") && !cate.contains("\\|\\|")) {
+                return cate;
+            } else if (cate.contains("\\|\\|")) {
                 type = cate.split("\\|\\|")[0];
                 suffix = "#" + cate.split("\\|\\|")[1];
+            } else {
+                suffix = "";
             }
             switch (type) {
                 case "数字": return numCate + suffix;
                 case "拼音": return pyCate + suffix;
                 case "英文": return enCate + suffix;
+                default: return suffix;
             }
         } catch (Exception e) {
             SpiderDebug.log(e);
