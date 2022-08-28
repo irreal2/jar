@@ -22,6 +22,8 @@ import java.util.Set;
 
 public class XPath extends Spider {
 
+    boolean isHome = false;
+
     @Override
     public void init(Context context) {
         super.init(context);
@@ -47,57 +49,10 @@ public class XPath extends Spider {
                     classes.put(jsonObject);
                 }
             }
-            try {
-                String webUrl = rule.getHomeUrl();
-                JXDocument doc = JXDocument.create(fetch(webUrl));
-                if (rule.getCateManual().size() == 0) {
-                    List<JXNode> navNodes = doc.selN(rule.getCateNode());
-                    for (int i = 0; i < navNodes.size(); i++) {
-                        String name = navNodes.get(i).selOne(rule.getCateName()).asString().trim();
-                        name = rule.getCateNameR(name);
-                        String id = navNodes.get(i).selOne(rule.getCateId()).asString().trim();
-                        id = rule.getCateIdR(id);
-                        JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("type_id", id);
-                        jsonObject.put("type_name", name);
-                        classes.put(jsonObject);
-                    }
-                }
-                if (!rule.getHomeVodNode().isEmpty()) {
-                    try {
-                        JSONArray videos = new JSONArray();
-                        List<JXNode> vodNodes = doc.selN(rule.getHomeVodNode());
-                        for (int i = 0; i < vodNodes.size(); i++) {
-                            String name = vodNodes.get(i).selOne(rule.getHomeVodName()).asString().trim();
-                            name = rule.getHomeVodNameR(name);
-                            String id = vodNodes.get(i).selOne(rule.getHomeVodId()).asString().trim();
-                            id = rule.getHomeVodIdR(id);
-                            String pic = vodNodes.get(i).selOne(rule.getHomeVodImg()).asString().trim();
-                            pic = rule.getHomeVodImgR(pic);
-                            pic = Misc.fixUrl(webUrl, pic);
-                            String mark = "";
-                            if (!rule.getHomeVodMark().isEmpty()) {
-                                try {
-                                    mark = vodNodes.get(i).selOne(rule.getHomeVodMark()).asString().trim();
-                                    mark = rule.getHomeVodMarkR(mark);
-                                } catch (Exception e) {
-                                    SpiderDebug.log(e);
-                                }
-                            }
-                            JSONObject v = new JSONObject();
-                            v.put("vod_id", name + "$$$" + pic + "$$$" + id);
-                            v.put("vod_name", name);
-                            v.put("vod_pic", pic);
-                            v.put("vod_remarks", mark);
-                            videos.put(v);
-                        }
-                        result.put("list", videos);
-                    } catch (Exception e) {
-                        SpiderDebug.log(e);
-                    }
-                }
-            } catch (Exception e) {
-                SpiderDebug.log(e);
+            if (rule.getHotDisplay().equals("1")) {
+                isHome = true;
+                result =  categoryContent("", "", false, new HashMap<>());
+                isHome = false;
             }
             result.put("class", classes);
             if (filter && rule.getFilter() != null) {
@@ -130,7 +85,11 @@ public class XPath extends Spider {
     }
 
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        return rule.getCateUrl().replace("{cateId}", tid).replace("{catePg}", pg);
+       String cateUrl = rule.getCateUrl();
+       if (cateUrl.contains("||") && pg.eqauls("1") && cateUrl.split("||")[1].startsWith("http")) {
+            return cateUrl.split("||")[1];
+        }
+       return cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
     }
 
     @Override
@@ -142,6 +101,7 @@ public class XPath extends Spider {
             pg = String.valueOf(Integer.parseInt(pg) + Integer.parseInt(startPg) - 1);
             }
             String webUrl = categoryUrl(tid, pg, filter, extend);
+            if (isHome) webUrl = rule.getHomeUrl();
             JSONArray videos = new JSONArray();
             JXDocument doc = JXDocument.create(fetch(webUrl));
             List<JXNode> vodNodes = doc.selN(rule.getCateVodNode());
@@ -170,10 +130,12 @@ public class XPath extends Spider {
                 videos.put(v);
             }
             JSONObject result = new JSONObject();
-            result.put("page", pg);
-            result.put("pagecount", Integer.MAX_VALUE);
-            result.put("limit", 90);
-            result.put("total", Integer.MAX_VALUE);
+            if (!isHome) {
+                result.put("page", pg);
+                result.put("pagecount", Integer.MAX_VALUE);
+                result.put("limit", 90);
+                result.put("total", Integer.MAX_VALUE);
+            }
             result.put("list", videos);
             return result.toString();
         } catch (Exception e) {
