@@ -52,7 +52,7 @@ public class XPath extends Spider {
             if (rule.getHotDisplay().equals("1")) {
                 isHome = true;
                 String strResult = categoryContent("", "", false, new HashMap<>());
-                result = JSONObject.fromObject(strResult);
+                result = new JSONObject(strResult);
                 isHome = false;
             }
             result.put("class", classes);
