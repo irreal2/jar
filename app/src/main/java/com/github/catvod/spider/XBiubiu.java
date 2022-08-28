@@ -74,7 +74,6 @@ public class XBiubiu extends Spider {
             }
             result.put("class", classes);
             if (filter && isFilter) {
-                JSONObject filterJson = rule.optJSONObject("筛选");
                 if (!filterJson.isEmpty()) {
                     result.put("filters", filterJson);
                 } else {
