@@ -56,9 +56,7 @@ public class XBiubiu extends Spider {
         try {
             fetchRule();
             JSONObject filterJson = rule.optJSONObject("筛选");
-            if (!getRuleVal("筛选").isEmpty()) {
-                isFilter = getRuleVal("筛选").equals("1") || !filterJson.isEmpty();
-            }
+            isFilter = getRuleVal("筛选").equals("1") || filterJson != null;
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
             String[] cates = getRuleVal("fenlei", "").split("#");
@@ -74,7 +72,7 @@ public class XBiubiu extends Spider {
             }
             result.put("class", classes);
             if (filter && isFilter) {
-                if (!filterJson.isEmpty()) {
+                if (filterJson != null) {
                     result.put("filters", filterJson);
                 } else {
                     
