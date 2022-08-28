@@ -60,7 +60,7 @@ public class XBiubiu extends Spider {
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
             String[] cates = getRuleVal("fenlei", "").split("#");
-            if (isFilter || getRuleVal("fenlei").isEmpty()) {
+            if (getRuleVal("fenlei").isEmpty()) {
                 cates = getCate().split("#");
             }
             for (String cate : cates) {
@@ -75,7 +75,7 @@ public class XBiubiu extends Spider {
                 if (filterJson != null) {
                     result.put("filters", filterJson);
                 } else {
-                    
+                    result.put("filters", getFilterData());
                 }
             }
             return result.toString();
@@ -533,15 +533,13 @@ public class XBiubiu extends Spider {
     }
 
     private String getCate() {
-        String cate = getRuleVal("大类");
+        String cate = getRuleVal("分类");
         String numCate = "电影$1#连续剧$2#综艺$3#动漫$4";
         String pyCate = "电影$dianying#连续剧$lianxuju#综艺$zongyi#动漫$dongman";
         String enCate = "电影$mov#连续剧$tv#综艺$zongyi#动漫$acg";
         String suffix = "", type = cate;
         try {
-            if (cate.isEmpty()){
-                return numCate;
-            } else if (cate.contains("$") && !cate.contains("||")) {
+            if (cate.contains("$") && !cate.contains("||")) {
                 return cate;
             } else if (cate.contains("||")) {
                 type = cate.split("\\|\\|")[0];
@@ -551,14 +549,16 @@ public class XBiubiu extends Spider {
                 case "数字": return numCate + suffix;
                 case "拼音": return pyCate + suffix;
                 case "英文": return enCate + suffix;
-                default: return suffix;
             }
+            return numCate;
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return numCate;
     }
 
+    private JSONObject getFilterData() {
+
+    }
     private String getRuleVal(String key) {
         return getRuleVal(key, "");
     }
