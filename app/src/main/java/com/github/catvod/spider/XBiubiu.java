@@ -609,7 +609,7 @@ public class XBiubiu extends Spider {
             if (sniff.isEmpty()) videoFormatList = sniff.split("#");
             for (String format : videoFormatList) { 
                 if (url.contains(format)) {
-                    String[] filterList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"}
+                    String[] filterList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
                     String filter = getRuleVal("过滤词");
                     if (filter.isEmpty()) filterList = filter.split("#");
                     for (String fi : filterList) {

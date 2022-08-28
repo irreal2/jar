@@ -419,7 +419,7 @@ public class XPath extends Spider {
             if (sniffWord.isEmpty()) videoFormatList = sniffWord.split("#");
             for (String format : videoFormatList) { 
                 if (url.contains(format)) {
-                    String[] filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"}
+                    String[] filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
                     String filterWord = rule.getFilterWord();
                     if (filterWord.isEmpty()) filterWordList = filterWord.split("#");
                     for (String filter : filterWordList) {
