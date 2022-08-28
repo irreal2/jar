@@ -56,6 +56,21 @@ public class XPath extends Spider {
                     classes.put(jsonObject);
                 }
             }
+            String webUrl = rule.getHomeUrl();
+            JXDocument doc = JXDocument.create(fetch(webUrl));
+            if (rule.getCateManual().size() == 0) {
+                List<JXNode> navNodes = doc.selN(rule.getCateNode());
+                for (int i = 0; i < navNodes.size(); i++) {
+                    String name = navNodes.get(i).selOne(rule.getCateName()).asString().trim();
+                    name = rule.getCateNameR(name);
+                    String id = navNodes.get(i).selOne(rule.getCateId()).asString().trim();
+                    id = rule.getCateIdR(id);
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("type_id", id);
+                    jsonObject.put("type_name", name);
+                    classes.put(jsonObject);
+                }
+            }
             result.put("class", classes);
             if (filter && rule.getFilter() != null) {
                 result.put("filters", rule.getFilter());
@@ -99,9 +114,8 @@ public class XPath extends Spider {
             pg = String.valueOf(Integer.parseInt(pg) + Integer.parseInt(startPg) - 1);
             }
             String webUrl = categoryUrl(tid, pg, filter, extend);
-            String cateUrl = rule.getCateUrl();
-            if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
-                webUrl = cateUrl.split("||")[1];
+            if (webUrl.contains("||") && Integer.parseInt(pg)==1 && webUrl.split("||")[1].startsWith("http")) {
+                webUrl = webUrl.split("||")[1];
             }
             if (isHome) webUrl = rule.getHomeUrl();
             JSONArray videos = new JSONArray();
