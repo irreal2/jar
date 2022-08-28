@@ -409,12 +409,12 @@ public class XPath extends Spider {
     }
 
     @Override
-    public static boolean manualVideoCheck() {
-        return true;
+    public boolean manualVideoCheck() {
+        return false;
     }
 
     @Override
-    public static boolean isVideoFormat(String url) {
+    public boolean isVideoFormat(String url) {
             url = url.toLowerCase(); 
             String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
             String sniffWord = rule.getSniffWord();
