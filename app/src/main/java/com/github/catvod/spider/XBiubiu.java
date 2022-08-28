@@ -553,12 +553,12 @@ public class XBiubiu extends Spider {
                 case "数字": return numCate + suffix;
                 case "拼音": return pyCate + suffix;
                 case "英文": return enCate + suffix;
-                default: return numCate;
             }
+            return numCate;
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-            return numCate;
+        return numCate;
     }
 /*
     private JSONObject getFilterData() {
