@@ -51,7 +51,7 @@ public class XPath extends Spider {
             }
             if (rule.getHotDisplay().equals("1")) {
                 isHome = true;
-                result =  categoryContent("", "", false, new HashMap<>());
+                result =  JSONObject.parseJSONObject(categoryContent("", "", false, new HashMap<>()));
                 isHome = false;
             }
             result.put("class", classes);
@@ -135,9 +135,7 @@ public class XPath extends Spider {
                 result.put("pagecount", Integer.MAX_VALUE);
                 result.put("limit", 90);
                 result.put("total", Integer.MAX_VALUE);
-                result.put("list", videos);
-                return result;
-            }
+           }
             result.put("list", videos);
             return result.toString();
         } catch (Exception e) {
