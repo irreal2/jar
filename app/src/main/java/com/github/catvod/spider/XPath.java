@@ -259,8 +259,7 @@ public class XPath extends Spider {
                         name = rule.getDetailUrlNameR(name);
                         String id = urlNodes.get(j).selOne(rule.getDetailUrlId()).asString().trim();
                         id = rule.getDetailUrlIdR(id);
-                        if (isVideoFormat())
-                            vodItems.add(name + "$" + id);
+                        vodItems.add(name + "$" + id);
                         if (id.startsWith("magnet")) {
                             isMagnet = true;
                             break;
@@ -410,12 +409,12 @@ public class XPath extends Spider {
     }
 
     @Override
-    public boolean manualVideoCheck() {
+    public static boolean manualVideoCheck() {
         return true;
     }
 
     @Override
-    public boolean isVideoFormat(String url) {
+    public static boolean isVideoFormat(String url) {
             url = url.toLowerCase(); 
             String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
             String sniffWord = rule.getSniffWord();
