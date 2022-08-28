@@ -253,6 +253,14 @@ public class XPathRule {
      * 正则对取到的数据进行二次处理
      */
     private Pattern scVodMarkR;
+    /**
+     * 嗅探词
+     */
+    private String sniffWord;
+    /**
+     * 过滤词
+     */
+    private String filterWord;
 
     private static Pattern getPattern(JSONObject json, String key) {
         String v = json.optString(key).trim();
@@ -352,6 +360,8 @@ public class XPathRule {
             rule.scVodImgR = getPattern(jsonObj, "scVodImgR");
             rule.scVodMark = jsonObj.optString("scVodMark").trim();
             rule.scVodMarkR = getPattern(jsonObj, "scVodMarkR");
+            rule.sniffWord = jsonObj.optString("sniffWord").trim();
+            rule.filterWord = getPattern(jsonObj, "filterWord");
             return rule;
         } catch (Exception e) {
             SpiderDebug.log(e);
@@ -593,5 +603,13 @@ public class XPathRule {
 
     public String getSearchVodMarkR(String src) {
         return doReplaceRegex(scVodMarkR, src);
+    }
+
+    public String getSniffWord() {
+        return sniffWord;
+    }
+
+    public String getFilterWord() {
+        return FilterWord;
     }
 }
