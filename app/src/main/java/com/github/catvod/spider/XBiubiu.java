@@ -606,12 +606,12 @@ public class XBiubiu extends Spider {
             url = url.toLowerCase(); 
             String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
             String sniff = getRuleVal("嗅探词");
-            if (sniff.isEmpty()) videoFormatList = sniff.split("#");
+            if (!sniff.isEmpty() && !sniff.equals("空")) videoFormatList = sniff.split("#");
             for (String format : videoFormatList) { 
                 if (url.contains(format)) {
                     String[] filterList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
                     String filter = getRuleVal("过滤词");
-                    if (filter.isEmpty()) filterList = filter.split("#");
+                    if (!filter.isEmpty() && !filter.equals("空")) filterList = filter.split("#");
                     for (String fi : filterList) {
                         if (url.contains(fi)) {
                             return false;
