@@ -102,7 +102,8 @@ public class XBiubiu extends Spider {
     public String homeVideoContent() {
         try {
             fetchRule();
-            if (getRuleVal("shouye").equals("1")) {
+            if (getRuleVal("shouye").equals("0")) {
+            } else {
                 isHome = true;
                 JSONObject result =  category("", "", false, new HashMap<>());
                 isHome = false;
