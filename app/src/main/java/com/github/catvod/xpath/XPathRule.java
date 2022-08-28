@@ -610,6 +610,6 @@ public class XPathRule {
     }
 
     public String getFilterWord() {
-        return FilterWord;
+        return filterWord;
     }
 }
