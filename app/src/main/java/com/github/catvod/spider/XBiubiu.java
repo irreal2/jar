@@ -268,8 +268,7 @@ public class XBiubiu extends Spider {
                             if (!bfqianzhui.isEmpty()) {
                                 link = bfqianzhui + link;
                             }
-                            if (isVideoFormat())
-                                vodItems.add(title + "$" + link);
+                            vodItems.add(title + "$" + link);
                             if (link.startsWith("magnet")) {
                                 isMagnet = true;
                                 break;
@@ -599,12 +598,12 @@ public class XBiubiu extends Spider {
 
     //修复软件不支持的格式无法嗅探的问题
     @Override 
-        public boolean manualVideoCheck() { 
+        public static boolean manualVideoCheck() { 
             return true; 
         } 
      
         @Override 
-        public boolean isVideoFormat(String url) { 
+        public static boolean isVideoFormat(String url) {
             url = url.toLowerCase(); 
             String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
             String sniff = getRuleVal("嗅探词");
