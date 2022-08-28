@@ -259,7 +259,8 @@ public class XPath extends Spider {
                         name = rule.getDetailUrlNameR(name);
                         String id = urlNodes.get(j).selOne(rule.getDetailUrlId()).asString().trim();
                         id = rule.getDetailUrlIdR(id);
-                        vodItems.add(name + "$" + id);
+                        if (isVideoFormat)
+                            vodItems.add(name + "$" + id);
                         if (id.startsWith("magnet")) {
                             isMagnet = true;
                             break;
