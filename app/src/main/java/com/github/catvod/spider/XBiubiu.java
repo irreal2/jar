@@ -268,7 +268,7 @@ public class XBiubiu extends Spider {
                             if (!bfqianzhui.isEmpty()) {
                                 link = bfqianzhui + link;
                             }
-                            if (isVideoFormat)
+                            if (isVideoFormat())
                                 vodItems.add(title + "$" + link);
                             if (link.startsWith("magnet")) {
                                 isMagnet = true;
