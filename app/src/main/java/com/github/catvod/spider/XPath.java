@@ -408,27 +408,30 @@ public class XPath extends Spider {
 
     @Override
     public boolean manualVideoCheck() {
-        return false;
+        return true;
     }
-
-    private String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
 
     @Override
     public boolean isVideoFormat(String url) {
-        url = url.toLowerCase();
-        if (url.contains("=http") || url.contains("=https") || url.contains("=https%3a%2f") || url.contains("=http%3a%2f")) {
-            return false;
-        }
-        for (String format : videoFormatList) {
-            if (url.contains(format)) {
-                if ((url.contains("cdn-tos") && (url.contains(".js") || url.contains(".css"))) || url.contains(".jpg") || url.contains(".ico") || url.contains(".png") || url.contains(".gif")) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-        return false;
+            url = url.toLowerCase(); 
+            String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
+            String sniffWord = rule.getSniffWord();
+            if (sniffWord.isEmpty()) videoFormatList = sniffWord.split("#");
+            for (String format : videoFormatList) { 
+                if (url.contains(format)) {
+                    String[] filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"}
+                    String filterWord = rule.getFilterWord();
+                    if (filterWord.isEmpty()) filterWordList = filterWord.split("#");
+                    for (String filter : filterWordList) {
+                        if (url.contains(filter)) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                } 
+            } 
+            return false; 
     }
 
     protected String ext = null;

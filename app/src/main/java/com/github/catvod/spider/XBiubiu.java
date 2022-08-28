@@ -150,7 +150,7 @@ public class XBiubiu extends Spider {
             if (isFilter || getRuleVal("fenlei").isEmpty()) {
             webUrl = categoryUrl(tid, pg, filter, extend);
             }
-            String cateUrl = getRuleVal("分类页")
+            String cateUrl = getRuleVal("分类页");
             if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
                 webUrl = cateUrl.split("||")[1];
             }
@@ -601,20 +601,23 @@ public class XBiubiu extends Spider {
             return true; 
         } 
      
-        private String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"}; 
-     
         @Override 
         public boolean isVideoFormat(String url) { 
             url = url.toLowerCase(); 
-            if (url.contains("=http") || url.contains("=https") || url.contains("=https%3a%2f") || url.contains("=http%3a%2f")) { 
-                return false; 
-            } 
+            String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
+            String sniff = getRuleVal("嗅探词");
+            if (sniff.isEmpty()) videoFormatList = sniff.split("#");
             for (String format : videoFormatList) { 
-                if (url.contains(format)) { 
-                    if ((url.contains("cdn-tos") && (url.contains(".js") || url.contains(".css"))) || url.contains(".jpg") || url.contains(".ico") || url.contains(".png") || url.contains(".gif")) {
-                        return false;
-                    } else {
-                        return true;
+                if (url.contains(format)) {
+                    String[] filterList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"}
+                    String filter = getRuleVal("过滤词");
+                    if (filter.isEmpty()) filterList = filter.split("#");
+                    for (String fi : filterList) {
+                        if (url.contains(fi)) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     }
                 } 
             } 
