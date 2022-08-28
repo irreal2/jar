@@ -99,7 +99,7 @@ public class XPath extends Spider {
             String webUrl = categoryUrl(tid, pg, filter, extend);
             String cateUrl = rule.getCateUrl();
             if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
-                webUrl cateUrl.split("||")[1];
+                webUrl = cateUrl.split("||")[1];
             }
             if (isHome) webUrl = rule.getHomeUrl();
             JSONArray videos = new JSONArray();

@@ -151,7 +151,7 @@ public class XBiubiu extends Spider {
             webUrl = categoryUrl(tid, pg, filter, extend);
             }
             if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
-                return cateUrl.split("||")[1];
+                webUrl = cateUrl.split("||")[1];
             }
             if (isHome) webUrl = getRuleVal("url");
             String html = fetch(webUrl);
