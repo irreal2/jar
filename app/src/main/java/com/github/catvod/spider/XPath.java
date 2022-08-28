@@ -51,7 +51,7 @@ public class XPath extends Spider {
             }
             if (rule.getHotDisplay().equals("1")) {
                 isHome = true;
-                string strResult = categoryContent("", "", false, new HashMap<>());
+                String strResult = categoryContent("", "", false, new HashMap<>());
                 result = JSONObject.fromObject(strResult);
                 isHome = false;
             }
