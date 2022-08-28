@@ -20,6 +20,10 @@ public class XPathRule {
      */
     private String homeUrl;
     /**
+     * 热门推荐展示开关
+     */
+    private String hotDisplay;
+    /**
      * 起始页码
      */
     private String startPage;
@@ -57,42 +61,6 @@ public class XPathRule {
      */
     private JSONObject filter;
 
-    /**
-     * 更新推荐视频节点 xpath
-     */
-    private String homeVodNode;
-    /**
-     * 更新推荐视频名称 xpath
-     */
-    private String homeVodName;
-    /**
-     * 正则对取到的数据进行二次处理
-     */
-    private Pattern homeVodNameR;
-    /**
-     * 更新推荐视频id xpath
-     */
-    private String homeVodId;
-    /**
-     * 正则对取到的数据进行二次处理
-     */
-    private Pattern homeVodIdR;
-    /**
-     * 更新推荐视频图片 xpath
-     */
-    private String homeVodImg;
-    /**
-     * 正则对取到的数据进行二次处理
-     */
-    private Pattern homeVodImgR;
-    /**
-     * 更新推荐视频简介 xpath
-     */
-    private String homeVodMark;
-    /**
-     * 正则对取到的数据进行二次处理
-     */
-    private Pattern homeVodMarkR;
     /**
      * 分类页地址
      */
@@ -319,6 +287,7 @@ public class XPathRule {
             JSONObject jsonObj = new JSONObject(json);
             XPathRule rule = new XPathRule();
             rule.ua = jsonObj.optString("ua");
+            rule.hotDisplay = jsonObj.optString("hotDisplay").trim();
             rule.startPage = jsonObj.optString("startPage").trim();
             rule.directPlay = jsonObj.optString("directPlay").trim();
             rule.homeUrl = jsonObj.optString("homeUrl").trim();
@@ -336,15 +305,6 @@ public class XPathRule {
                 }
             }
             rule.filter = jsonObj.optJSONObject("filter");
-            rule.homeVodNode = jsonObj.optString("homeVodNode").trim();
-            rule.homeVodName = jsonObj.optString("homeVodName").trim();
-            rule.homeVodNameR = getPattern(jsonObj, "homeVodNameR");
-            rule.homeVodId = jsonObj.optString("homeVodId").trim();
-            rule.homeVodIdR = getPattern(jsonObj, "homeVodIdR");
-            rule.homeVodImg = jsonObj.optString("homeVodImg").trim();
-            rule.homeVodImgR = getPattern(jsonObj, "homeVodImgR");
-            rule.homeVodMark = jsonObj.optString("homeVodMark").trim();
-            rule.homeVodMarkR = getPattern(jsonObj, "homeVodMarkR");
             rule.cateUrl = jsonObj.optString("cateUrl").trim();
             rule.cateVodNode = jsonObj.optString("cateVodNode").trim();
             rule.cateVodName = jsonObj.optString("cateVodName").trim();
@@ -407,6 +367,10 @@ public class XPathRule {
         return homeUrl;
     }
 
+    public String getHotDisplay() {
+        return hotDisplay;
+    }
+
     public String getStartPage() {
         return startPage;
     }
@@ -441,42 +405,6 @@ public class XPathRule {
 
     public JSONObject getFilter() {
         return filter;
-    }
-
-    public String getHomeVodNode() {
-        return homeVodNode;
-    }
-
-    public String getHomeVodName() {
-        return homeVodName;
-    }
-
-    public String getHomeVodNameR(String src) {
-        return doReplaceRegex(homeVodNameR, src);
-    }
-
-    public String getHomeVodId() {
-        return homeVodId;
-    }
-
-    public String getHomeVodIdR(String src) {
-        return doReplaceRegex(homeVodIdR, src);
-    }
-
-    public String getHomeVodImg() {
-        return homeVodImg;
-    }
-
-    public String getHomeVodImgR(String src) {
-        return doReplaceRegex(homeVodImgR, src);
-    }
-
-    public String getHomeVodMark() {
-        return homeVodMark;
-    }
-
-    public String getHomeVodMarkR(String src) {
-        return doReplaceRegex(homeVodMarkR, src);
     }
 
     public String getCateUrl() {
