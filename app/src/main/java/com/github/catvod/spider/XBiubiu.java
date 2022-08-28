@@ -75,7 +75,7 @@ public class XBiubiu extends Spider {
                 if (filterJson != null) {
                     result.put("filters", filterJson);
                 } else {
-                    result.put("filters", getFilterData());
+        //            result.put("filters", getFilterData());
                 }
             }
             return result.toString();
@@ -525,6 +525,10 @@ public class XBiubiu extends Spider {
         return callBack.getResult().replaceAll("\r|\n", "");
     }
 
+    private String getRuleVal(String key) {
+        return getRuleVal(key, "");
+    }
+
     private String getRuleVal(String key, String defaultVal) {
         String v = rule.optString(key);
         if (v.isEmpty() || v.equals("空"))
@@ -549,20 +553,18 @@ public class XBiubiu extends Spider {
                 case "数字": return numCate + suffix;
                 case "拼音": return pyCate + suffix;
                 case "英文": return enCate + suffix;
+                default: return numCate;
             }
-            return numCate;
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
+            return numCate;
     }
-
+/*
     private JSONObject getFilterData() {
-
+        String[] data = getRuleVal("小类").split;;
     }
-    private String getRuleVal(String key) {
-        return getRuleVal(key, "");
-    }
-
+*/
     private ArrayList<String> subContent(String content, String startFlag, String endFlag) {
         ArrayList<String> result = new ArrayList<>();
         if (startFlag.isEmpty() && endFlag.isEmpty()) {
