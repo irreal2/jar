@@ -361,7 +361,7 @@ public class XPathRule {
             rule.scVodMark = jsonObj.optString("scVodMark").trim();
             rule.scVodMarkR = getPattern(jsonObj, "scVodMarkR");
             rule.sniffWord = jsonObj.optString("sniffWord").trim();
-            rule.filterWord = getPattern(jsonObj, "filterWord");
+            rule.filterWord = jsonObj.optString("filterWord").trim();
             return rule;
         } catch (Exception e) {
             SpiderDebug.log(e);
