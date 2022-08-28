@@ -40,6 +40,13 @@ public class XPath extends Spider {
             fetchRule();
             JSONObject result = new JSONObject();
             JSONArray classes = new JSONArray();
+            if (rule.getHotDisplay().equals("0")) {
+            } else {
+                isHome = true;
+                String strResult = categoryContent("", "", false, new HashMap<>());
+                result = new JSONObject(strResult);
+                isHome = false;
+            }
             if (rule.getCateManual().size() > 0) {
                 Set<String> keys = rule.getCateManual().keySet();
                 for (String k : keys) {
@@ -48,13 +55,6 @@ public class XPath extends Spider {
                     jsonObject.put("type_id", rule.getCateManual().get(k));
                     classes.put(jsonObject);
                 }
-            }
-            if (rule.getHotDisplay().equals("0")) {
-            } else {
-                isHome = true;
-                String strResult = categoryContent("", "", false, new HashMap<>());
-                result = new JSONObject(strResult);
-                isHome = false;
             }
             result.put("class", classes);
             if (filter && rule.getFilter() != null) {
