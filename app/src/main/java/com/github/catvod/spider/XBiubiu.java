@@ -71,7 +71,7 @@ public class XBiubiu extends Spider {
             result.put("class", classes);
 
             String filterName = "";
-            if (rule.optJSONObject("筛选") != null) {
+            if (rule.optJSONObject("筛选") != null || !getRuleVal("筛选").isEmpty()) {
                 filterName = "筛选";
             } else if  (rule.optJSONObject("filter") != null) {
                 filterName = "filter";
