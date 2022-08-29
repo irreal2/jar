@@ -76,7 +76,7 @@ public class XBiubiu extends Spider {
             }
             result.put("class", classes);
 
-            JSONObject filterJson；
+            JSONObject filterJson = new JSONObject();
             String filterName;
             if (!rule.optJSONObject("筛选").isEmpty()) {
                 filterName = "筛选";
@@ -378,7 +378,7 @@ public class XBiubiu extends Spider {
                String xljiequshuzuqian = "xljiequshuzuqian";
                String xljiequshuzuhou = "xljiequshuzuhou";
                String xlbiaotiqian = "xlbiaotiqian";
-               String xlbiaotihou.= "xlbiaotihou";
+               String xlbiaotihou = "xlbiaotihou";
                if (!getRuleVal("线路名标题后").isEmpty() && !getRuleVal("线路名标题后").equals("空")) {
                    xlshifouercijiequ = "线路名是否二次截取";
                    xljiequqian = "线路名截取前";
@@ -386,7 +386,7 @@ public class XBiubiu extends Spider {
                    xljiequshuzuqian = "线路名截取数组前";
                    xljiequshuzuhou = "线路名截取数组后";
                    xlbiaotiqian = "线路名标题前";
-                   xlbiaotihou.= "线路名标题后";
+                   xlbiaotihou = "线路名标题后";
                }
                boolean xlshifouercijiequ = getRuleVal(xlshifouercijiequ).equals("1");
                if (xlshifouercijiequ) {
