@@ -132,7 +132,7 @@ public class XBiubiu extends Spider {
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
             if (cateUrl.contains("||")) {
-                if (pg.equals("1")) {
+                if (pg.equals(getRuleVal(qishiye))) {
                     cateUrl = cateUrl.split("||")[1];
                 } else {
                     cateUrl = cateUrl.split("||")[0];
@@ -160,19 +160,23 @@ public class XBiubiu extends Spider {
     private JSONObject category(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
-            if (tid.equals("空"))
-                tid = "";
-            String qishiye = rule.optString("qishiye", "nil");
-            if (qishiye.equals("空"))
-                pg = "";
-            else if (!qishiye.equals("nil")) {
-                pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
+            if (isHome) {
+                webUrl = getRuleVal("url");
+            } else {
+                if (tid.equals("空"))
+                    tid = "";
+                String qishiye = rule.optString("qishiye", "1");
+                if (qishiye.equals("空")) {
+                    pg = "";
+                } else {
+                    pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
+                }
+                if (!getRuleVal("fenlei").isEmpty()) {
+                    String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
+                } else {
+                   webUrl = categoryUrl(tid, pg, filter, extend);
+                }
             }
-            String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
-            if (isFilter || getRuleVal("fenlei").isEmpty()) {
-            webUrl = categoryUrl(tid, pg, filter, extend);
-            }
-            if (isHome) webUrl = getRuleVal("url");
             String html = fetch(webUrl);
             html = removeUnicode(html);
             String parseContent = html;
