@@ -160,6 +160,7 @@ public class XBiubiu extends Spider {
     private JSONObject category(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
+            String webUrl;
             if (isHome) {
                 webUrl = getRuleVal("url");
             } else {
@@ -172,7 +173,7 @@ public class XBiubiu extends Spider {
                     pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
                 }
                 if (!getRuleVal("fenlei").isEmpty()) {
-                    String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
+                   webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
                 } else {
                    webUrl = categoryUrl(tid, pg, filter, extend);
                 }
