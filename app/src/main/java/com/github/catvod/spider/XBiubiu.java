@@ -423,11 +423,13 @@ public class XBiubiu extends Spider {
             fetchRule();
             String webUrl = (id.startsWith("http") || id.startsWith("magnet")) ? id : getRuleVal("url") + id;
             JSONObject result = new JSONObject();
+            String user = getRuleVal("User");
             result.put("parse", 1);
             result.put("playUrl", "");
-            if (!getRuleVal("User").isEmpty()) {
+            if (!user.isEmpty()) {
                JSONObject headers = new JSONObject();
-               headers.put("User-Agent",getRuleVal("User"));
+               user = user.contains("$") ? user.split("$")[1] : user;
+               headers.put("User-Agent",user);
                result.put("header",headers.toString());
                System.out.println(result);
             }
