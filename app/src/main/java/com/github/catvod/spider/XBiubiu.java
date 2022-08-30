@@ -662,7 +662,7 @@ public class XBiubiu extends Spider {
         fetchRule();
         String url = url.toLowerCase();
         String[] videoFormatList = getRuleVal("嗅探词",".m3u8#.mp4#.flv#.mp3").split("#");
-        String[] videoSniffList = getRuleVal("过滤词","=http#=https#=https%3a%2f#=http%3a%2f#.jpg#.png#.ico#.gif#.js").split("#")
+        String[] videoSniffList = getRuleVal("过滤词","=http#=https#=https%3a%2f#=http%3a%2f#.jpg#.png#.ico#.gif#.js").split("#");
         for (String sniff : videoSniffList) {
             if (!url.contains(sniff)) {
                 for (String format : videoFormatList) {
