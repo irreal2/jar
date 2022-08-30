@@ -132,7 +132,7 @@ public class XBiubiu extends Spider {
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
             if (cateUrl.contains("||")) {
-                if (pg.equals(getRuleVal(qishiye))) {
+                if (pg.equals(getRuleVal("qishiye"，"1"))) {
                     cateUrl = cateUrl.split("||")[1];
                 } else {
                     cateUrl = cateUrl.split("||")[0];
@@ -165,7 +165,7 @@ public class XBiubiu extends Spider {
             } else {
                 if (tid.equals("空"))
                     tid = "";
-                String qishiye = rule.optString("qishiye", "1");
+                String qishiye = getRuleVal("qishiye", "1");
                 if (qishiye.equals("空")) {
                     pg = "";
                 } else {
