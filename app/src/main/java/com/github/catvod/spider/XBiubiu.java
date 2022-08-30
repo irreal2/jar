@@ -132,22 +132,23 @@ public class XBiubiu extends Spider {
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
         if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
-            cateUrl = cateUrl.split("||")[1];
-        }
-        if (filter && isFilter && extend != null && extend.size() > 0) {
-            for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
-                String key = it.next();
-                String value = extend.get(key);
-                if (value.length() > 0) {
-                    cateUrl = cateUrl.replace("{" + key + "}", URLEncoder.encode(value));
+            cateUrl = cateUrl.split("||")[1].replace("{cateId}", tid).replace("{catePg}", pg);
+        } else {
+            if (filter && isFilter && extend != null && extend.size() > 0) {
+                for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
+                    String key = it.next();
+                    String value = extend.get(key);
+                    if (value.length() > 0) {
+                        cateUrl = cateUrl.replace("{" + key + "}", URLEncoder.encode(value));
+                    }
                 }
             }
-        }
-        cateUrl = cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
-        Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
-        while (m.find()) {
-            String n = m.group(0).replace("{", "").replace("}", "");
-            cateUrl = cateUrl.replace(m.group(0), "").replace("/" + n + "/", "");
+            cateUrl = cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
+            Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
+            while (m.find()) {
+                String n = m.group(0).replace("{", "").replace("}", "");
+                cateUrl = cateUrl.replace(m.group(0), "").replace("/" + n + "/", "");
+            }
         }
         return cateUrl;
     }
