@@ -449,11 +449,11 @@ public class XPath extends Spider {
             for (String format : videoFormatList) { 
                 if (url.contains(format)) {
                     for (String filter : filterWordList) {
-                        if (!url.contains(filter)) {
-                            return true;
+                        if (url.contains(filter)) {
+                            return false;
                         }
-                        return false;
                     }
+                    return true;
                 } 
             } 
             return false; 

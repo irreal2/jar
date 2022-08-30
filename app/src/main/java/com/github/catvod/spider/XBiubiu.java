@@ -665,11 +665,11 @@ public class XBiubiu extends Spider {
         for (String format : videoFormatList) {
             if (url.contains(format)) {
                 for (String sniff : videoSniffList) {
-                    if (!url.contains(sniff)) {
-                        return true;
+                    if (url.contains(sniff)) {
+                        return false;
                     }
-                    return false;
                 }
+                return true;
             }
         }
         return false;
