@@ -131,6 +131,9 @@ public class XBiubiu extends Spider {
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
+        if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
+            cateUrl = cateUrl.split("||")[1];
+        }
         if (filter && isFilter && extend != null && extend.size() > 0) {
             for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
@@ -139,9 +142,6 @@ public class XBiubiu extends Spider {
                     cateUrl = cateUrl.replace("{" + key + "}", URLEncoder.encode(value));
                 }
             }
-        }
-        if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
-            webUrl = cateUrl.split("||")[1];
         }
         cateUrl = cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
         Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
