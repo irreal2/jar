@@ -140,6 +140,9 @@ public class XBiubiu extends Spider {
                 }
             }
         }
+        if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
+            webUrl = cateUrl.split("||")[1];
+        }
         cateUrl = cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
         Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
         while (m.find()) {
@@ -163,10 +166,6 @@ public class XBiubiu extends Spider {
             String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
             if (isFilter || getRuleVal("fenlei").isEmpty()) {
             webUrl = categoryUrl(tid, pg, filter, extend);
-            }
-            String cateUrl = getRuleVal("分类页");
-            if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
-                webUrl = cateUrl.split("||")[1];
             }
             if (isHome) webUrl = getRuleVal("url");
             String html = fetch(webUrl);
