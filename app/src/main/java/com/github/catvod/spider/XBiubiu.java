@@ -653,18 +653,22 @@ public class XBiubiu extends Spider {
     @Override 
     public boolean manualVideoCheck() { 
         fetchRule();
-        return getRuleVal("手动嗅探").equals("1"); 
+        if (getRuleVal("嗅探词").equals("0")) return false;
+        return !getRuleVal("嗅探词").isEmpty() || !getRuleVal("过滤词").isEmpty(); 
     } 
      
     @Override 
     public boolean isVideoFormat(String url) {
         fetchRule();
-        String[] videoFormatList = getRuleVal("嗅探词").split("#");
-        String lowerCase = url.toLowerCase();
-        if (!lowerCase.contains("=http") && !lowerCase.contains("=https") && !lowerCase.contains("=https%3a%2f") && !lowerCase.contains("=http%3a%2f")) {
-            for (String vFormat : videoFormatList) {
-                if (lowerCase.contains(vFormat)) {
-                    return true;
+        String url = url.toLowerCase();
+        String[] videoFormatList = getRuleVal("嗅探词",".m3u8#.mp4#.flv#.mp3").split("#");
+        String[] videoSniffList = getRuleVal("过滤词","=http#=https#=https%3a%2f#=http%3a%2f#.jpg#.png#.ico#.gif#.js").split("#")
+        for (String sniff : videoSniffList) {
+            if (!url.contains(sniff)) {
+                for (String format : videoFormatList) {
+                    if (url.contains(format)) {
+                        return true;
+                    }
                 }
             }
         }
