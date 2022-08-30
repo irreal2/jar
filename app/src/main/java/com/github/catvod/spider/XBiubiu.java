@@ -360,7 +360,7 @@ public class XBiubiu extends Spider {
             vod.put("vod_content", desc);
 	       ArrayList<String> playFrom = new ArrayList<>();
            String xlparseContent = html;
-           if ((getRuleVal("线路名标题后").isEmpty() || getRuleVal("xlbiaotihou").isEmpty() || getRuleVal("线路名标题后").equals("空") || getRuleVal("xlbiaotihou").equals("空")) && !getRuleVal("是否启用播放线路名").equals("1")){
+           if (((getRuleVal("线路名标题后").isEmpty() && getRuleVal("xlbiaotihou").isEmpty()) || (getRuleVal("线路名标题后").equals("空") && getRuleVal("xlbiaotihou").equals("空"))) && !getRuleVal("是否启用播放线路名").equals("1")){
                for (int i = 0; i < playList.size(); i++) {
                    playFrom.add("播放列表" + (i + 1));
                }
