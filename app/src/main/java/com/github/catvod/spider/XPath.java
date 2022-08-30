@@ -424,7 +424,9 @@ public class XPath extends Spider {
 
     @Override
     public boolean manualVideoCheck() {
-        return (!sniffWord.isEmpty() && !sniffWord.equals("空") && !sniffWord.equals("")) || (!filterWord.isEmpty() && !filterWord.equals("空") && !filterWord.equals(""));
+        String sniffWord = rule.getSniffWord();
+        String filterWord = rule.getFilterWord();
+        return (!sniffWord.isEmpty() && !sniffWord.equals("空")) || (!filterWord.isEmpty() && !filterWord.equals("空"));
     }
 
     @Override
@@ -432,13 +434,13 @@ public class XPath extends Spider {
             url = url.toLowerCase(); 
             String sniffWord = rule.getSniffWord();
             String filterWord = rule.getFilterWord();
-            if (!sniffWord.isEmpty() && !sniffWord.equals("空") && !sniffWord.equals("")) {
-                videoFormatList = sniffWord.split("#");
+            if (!sniffWord.isEmpty() && !sniffWord.equals("空")) {
+                String[] videoFormatList = sniffWord.split("#");
             } else {
                 String[] videoFormatList = new String[]{".m3u8", ".mp4", ".flv",".mp3"};
             }
-            if (!filterWord.isEmpty() && !filterWord.equals("空") && !filterWord.equals("")) {
-                filterWordList = filterWord.split("#");
+            if (!filterWord.isEmpty() && !filterWord.equals("空")) {
+                String[] filterWordList = filterWord.split("#");
             } else {
                 String[] filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
             }
