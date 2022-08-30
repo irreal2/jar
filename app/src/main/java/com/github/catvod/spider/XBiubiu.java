@@ -653,7 +653,6 @@ public class XBiubiu extends Spider {
     @Override 
     public boolean manualVideoCheck() { 
         fetchRule();
-        if (getRuleVal("嗅探词").equals("0")) return false;
         return !getRuleVal("嗅探词").isEmpty() || !getRuleVal("过滤词").isEmpty(); 
     } 
      
@@ -663,10 +662,10 @@ public class XBiubiu extends Spider {
         url = url.toLowerCase();
         String[] videoFormatList = getRuleVal("嗅探词",".m3u8#.mp4#.flv#.mp3").split("#");
         String[] videoSniffList = getRuleVal("过滤词","=http#=https#=https%3a%2f#=http%3a%2f#.jpg#.png#.ico#.gif#.js").split("#");
-        for (String sniff : videoSniffList) {
-            if (!url.contains(sniff)) {
-                for (String format : videoFormatList) {
-                    if (url.contains(format)) {
+        for (String format : videoFormatList) {
+            if (url.contains(format)) {
+                for (String sniff : videoSniffList) {
+                    if (!url.contains(sniff)) {
                         return true;
                     }
                 }
