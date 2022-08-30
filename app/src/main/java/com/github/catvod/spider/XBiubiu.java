@@ -425,9 +425,9 @@ public class XBiubiu extends Spider {
             JSONObject result = new JSONObject();
             result.put("parse", 1);
             result.put("playUrl", "");
-            if (!getRuleVal("playUa").isEmpty()) {
+            if (!getRuleVal("User").isEmpty()) {
                JSONObject headers = new JSONObject();
-               headers.put("User-Agent",getRuleVal("playUa"));
+               headers.put("User-Agent",getRuleVal("User"));
                result.put("header",headers.toString());
                System.out.println(result);
             }
@@ -629,7 +629,7 @@ public class XBiubiu extends Spider {
             Pattern pattern = Pattern.compile(escapeExprSpecialWord(startFlag) + "([\\S\\s]*?)" + escapeExprSpecialWord(endFlag));
             Matcher matcher = pattern.matcher(content);
             while (matcher.find()) {
-                result.add(matcher.group(1));
+                result.add(matcher.group(1).trim());
             }
         } catch (Throwable th) {
             th.printStackTrace();
