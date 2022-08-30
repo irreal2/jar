@@ -452,6 +452,7 @@ public class XPath extends Spider {
                         if (!url.contains(filter)) {
                             return true;
                         }
+                        return false;
                     }
                 } 
             } 

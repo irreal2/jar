@@ -668,6 +668,7 @@ public class XBiubiu extends Spider {
                     if (!url.contains(sniff)) {
                         return true;
                     }
+                    return false;
                 }
             }
         }
