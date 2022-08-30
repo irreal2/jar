@@ -434,15 +434,17 @@ public class XPath extends Spider {
             url = url.toLowerCase(); 
             String sniffWord = rule.getSniffWord();
             String filterWord = rule.getFilterWord();
+            String[] videoFormatList;
+            String[] filterWordList;
             if (!sniffWord.isEmpty() && !sniffWord.equals("空")) {
-                String[] videoFormatList = sniffWord.split("#");
+                videoFormatList = sniffWord.split("#");
             } else {
-                String[] videoFormatList = new String[]{".m3u8", ".mp4", ".flv",".mp3"};
+                videoFormatList = new String[]{".m3u8", ".mp4", ".flv",".mp3"};
             }
             if (!filterWord.isEmpty() && !filterWord.equals("空")) {
-                String[] filterWordList = filterWord.split("#");
+                filterWordList = filterWord.split("#");
             } else {
-                String[] filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
+                filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
             }
             for (String format : videoFormatList) { 
                 if (url.contains(format)) {
