@@ -424,24 +424,22 @@ public class XPath extends Spider {
 
     @Override
     public boolean manualVideoCheck() {
-        return false;
+        return (!sniffWord.isEmpty() && !sniffWord.equals("空") && !sniffWord.equals("")) || (!filterWord.isEmpty() && !filterWord.equals("空") && !filterWord.equals(""));
     }
 
     @Override
     public boolean isVideoFormat(String url) {
             url = url.toLowerCase(); 
-            String[] videoFormatList = new String[]{".m3u8", ".mp4", ".mpeg", ".flv",".avi",".mkv",".mov",".3gp",".asf",".rm",".rmvb",".wmv",".mpg",".mpe",".ts",".vob",".m4a",".mp3",".wma"};
+            String[] videoFormatList = new String[]{".m3u8", ".mp4", ".flv",".mp3"};
+            String[] filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
             String sniffWord = rule.getSniffWord();
-            if (!sniffWord.isEmpty() && !sniffWord.equals("空")) videoFormatList = sniffWord.split("#");
+            if (!sniffWord.isEmpty() && !sniffWord.equals("空") && !sniffWord.equals("")) videoFormatList = sniffWord.split("#");
+            if (!filterWord.isEmpty() && !filterWord.equals("空") && !filterWord.equals("")) filterWordList = filterWord.split("#");
             for (String format : videoFormatList) { 
                 if (url.contains(format)) {
-                    String[] filterWordList = new String[]{"=http","=https","=https%3a%2f","=http%3a%2f",".js", ".jpg", ".png",".ico",".gif"};
                     String filterWord = rule.getFilterWord();
-                    if (!filterWord.isEmpty() && !filterWord.equals("空")) filterWordList = filterWord.split("#");
                     for (String filter : filterWordList) {
-                        if (url.contains(filter)) {
-                            return false;
-                        } else {
+                        if (!url.contains(filter)) {
                             return true;
                         }
                     }
