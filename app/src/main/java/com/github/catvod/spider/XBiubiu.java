@@ -169,7 +169,7 @@ public class XBiubiu extends Spider {
                     pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
                 }
                 if (getRuleVal("fenlei").isEmpty()) {
-                    if (cateUrl.contains("||") && pg.equals(getRuleVal("qishiye", "1")) && cateUrl.split("||")[1].startsWith("http")) {
+                    if (cateUrl.contains("||") && pg.equals("1") && cateUrl.split("||")[1].startsWith("http") && qishiye.equals("nil")) {
                        webUrl = cateUrl.split("||")[1].replace("{cateId}", tid);
                     } else {
                         webUrl = categoryUrl(tid, pg, filter, extend);
