@@ -131,7 +131,7 @@ public class XBiubiu extends Spider {
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
-        if (cateUrl.contains("||")) cateUrl = cateUrll.split("||")[0];
+        if (cateUrl.contains("||")) cateUrl = cateUrl.split("||")[0];
         if (filter && isFilter && extend != null && extend.size() > 0) {
             for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
@@ -165,8 +165,8 @@ public class XBiubiu extends Spider {
             if (isFilter || getRuleVal("fenlei").isEmpty()) {
             webUrl = categoryUrl(tid, pg, filter, extend);
             }
+            String cateUrl = getRuleVal("分类页");
             if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
-               String cateUrl = getRuleVal("分类页");
                webUrl = cateUrl.split("||")[1].replace("{cateId}", tid);
             }
             if (isHome) webUrl = getRuleVal("url");
