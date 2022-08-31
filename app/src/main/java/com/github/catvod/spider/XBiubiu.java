@@ -152,9 +152,10 @@ public class XBiubiu extends Spider {
     private JSONObject category(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
+            String webUrl;
             String cateUrl = getRuleVal("分类页");
             if (isHome) {
-                String webUrl = getRuleVal("url");
+                webUrl = getRuleVal("url");
             } else {
                 if (tid.equals("空"))
                     tid = "";
