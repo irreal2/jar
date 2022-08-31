@@ -130,8 +130,7 @@ public class XBiubiu extends Spider {
 
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        String cateUrl = getRuleVal("分类页");
-        if (cateUrl.contains("||")) cateUrl = cateUrl.split("||")[0];
+        String cateUrl = getRuleVal("分类页").split("||")[0];
         if (filter && isFilter && extend != null && extend.size() > 0) {
             for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
@@ -153,23 +152,28 @@ public class XBiubiu extends Spider {
     private JSONObject category(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
-            if (tid.equals("空"))
-                tid = "";
-            String qishiye = getRuleVal("qishiye", "nil");
-            if (qishiye.equals("空"))
-                pg = "";
-            else if (!qishiye.equals("nil")) {
-                pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
-            }
-            String webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
-            if (isFilter || getRuleVal("fenlei").isEmpty()) {
-            webUrl = categoryUrl(tid, pg, filter, extend);
-            }
             String cateUrl = getRuleVal("分类页");
-            if (cateUrl.contains("||") && pg.equals(getRuleVal("qishiye", "1")) && cateUrl.split("||")[1].startsWith("http")) {
-               webUrl = cateUrl.split("||")[1].replace("{cateId}", tid);
+            if (isHome) {
+                String webUrl = getRuleVal("url");
+            } else {
+                if (tid.equals("空"))
+                    tid = "";
+                String qishiye = getRuleVal("qishiye", "nil");
+                if (qishiye.equals("空"))
+                    pg = "";
+                else if (!qishiye.equals("nil")) {
+                    pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
+                }
+                if (getRuleVal("fenlei").isEmpty()) {
+                    if (cateUrl.contains("||") && pg.equals(getRuleVal("qishiye", "1")) && cateUrl.split("||")[1].startsWith("http")) {
+                       webUrl = cateUrl.split("||")[1].replace("{cateId}", tid);
+                    } else {
+                        webUrl = categoryUrl(tid, pg, filter, extend);
+                    }
+                } else {
+                    webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
+                }
             }
-            if (isHome) webUrl = getRuleVal("url");
             String html = fetch(webUrl);
             html = removeUnicode(html);
             String parseContent = html;
