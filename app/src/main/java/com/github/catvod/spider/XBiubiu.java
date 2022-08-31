@@ -132,12 +132,7 @@ public class XBiubiu extends Spider {
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
             if (cateUrl.contains("||")) {
-                if (pg.equals(getRuleVal("qishiye","1"))) {
-                    cateUrl = cateUrl.split("||")[1];
-                    pg = "";
-                } else {
-                    cateUrl = cateUrl.split("||")[0];
-                }
+                   cateUrl = cateUrl.split("||")[0];
             }
             if (filter && isFilter && extend != null && extend.size() > 0) {
                 for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
@@ -148,7 +143,11 @@ public class XBiubiu extends Spider {
                     }
                 }
             }
+            if (cateUrl.contains("||") && pg.equals(getRuleVal("qishiye","1"))) {
+                cateUrl = cateUrl.split("||")[1].replace("{cateId}", tid);
+            } else { 
             cateUrl = cateUrl.replace("{cateId}", tid).replace("{catePg}", pg);
+            }
             Matcher m = Pattern.compile("\\{(.*?)\\}").matcher(cateUrl);
             while (m.find()) {
                 String n = m.group(0).replace("{", "").replace("}", "");
