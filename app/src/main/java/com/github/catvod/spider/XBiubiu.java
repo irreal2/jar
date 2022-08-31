@@ -134,6 +134,7 @@ public class XBiubiu extends Spider {
             if (cateUrl.contains("||")) {
                 if (pg.equals(getRuleVal("qishiye","1"))) {
                     cateUrl = cateUrl.split("||")[1];
+                    pg = "";
                 } else {
                     cateUrl = cateUrl.split("||")[0];
                 }
