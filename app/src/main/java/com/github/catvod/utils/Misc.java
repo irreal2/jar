@@ -98,6 +98,7 @@ public class Misc {
         } else {
             url = jsonPlayData.getString("url");
         }
+        url = url.replaceAll("\\","");
         if (url.startsWith("//")) {
             url = "https:" + url;
         }
