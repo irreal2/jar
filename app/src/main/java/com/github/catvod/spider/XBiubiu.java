@@ -155,7 +155,7 @@ public class XBiubiu extends Spider {
             fetchRule();
             if (tid.equals("空"))
                 tid = "";
-            String qishiye = rule.optString("qishiye", "nil");
+            String qishiye = getRuleVal("qishiye", "nil");
             if (qishiye.equals("空"))
                 pg = "";
             else if (!qishiye.equals("nil")) {
@@ -166,7 +166,7 @@ public class XBiubiu extends Spider {
             webUrl = categoryUrl(tid, pg, filter, extend);
             }
             String cateUrl = getRuleVal("分类页");
-            if (cateUrl.contains("||") && Integer.parseInt(pg)==1 && cateUrl.split("||")[1].startsWith("http")) {
+            if (cateUrl.contains("||") && pg.equals(getRuleVal("qishiye", "1")) && cateUrl.split("||")[1].startsWith("http")) {
                webUrl = cateUrl.split("||")[1].replace("{cateId}", tid);
             }
             if (isHome) webUrl = getRuleVal("url");
