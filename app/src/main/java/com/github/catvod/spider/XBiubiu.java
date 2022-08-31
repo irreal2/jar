@@ -130,7 +130,10 @@ public class XBiubiu extends Spider {
 
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
-        String cateUrl = getRuleVal("分类页").split("||")[0];
+        String cateUrl = getRuleVal("分类页");
+        if (cateUrl.contains("||")) {
+            cateUrl = cateUrl.split("||")[0];
+        }
         if (filter && isFilter && extend != null && extend.size() > 0) {
             for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
                 String key = it.next();
@@ -366,7 +369,7 @@ public class XBiubiu extends Spider {
             vod.put("vod_content", desc);
 	       ArrayList<String> playFrom = new ArrayList<>();
            String xlparseContent = html;
-           if (((getRuleVal("线路名标题后").isEmpty() && getRuleVal("线路名标题后").equals("空")) || (getRuleVal("xlbiaotihou").isEmpty() && getRuleVal("xlbiaotihou").equals("空"))) ){
+           if (((getRuleVal("线路名标题后").isEmpty() || getRuleVal("线路名标题后").equals("空")) && (getRuleVal("xlbiaotihou").isEmpty() || getRuleVal("xlbiaotihou").equals("空"))) ){
                for (int i = 0; i < playList.size(); i++) {
                    playFrom.add("播放列表" + (i + 1));
                }
