@@ -455,7 +455,7 @@ public class PushAgent extends Spider {
                 url = url.replaceAll("[\\S\\s]*(magnet:\\?xt=urn:btih:[0-9a-fA-F]{40})[\\S\\s]*", "$1");
             }
             if (url.contains("https://www.aliyundrive.com/s/")) {
-                url = url.replaceAll("[\\S\\s]*(https://www.aliyundrive.com/s/[0-9a-fA-F]{11})[\\S\\s]*", "$1");
+                url = url.replaceAll("[\\S\\s]*(https://www.aliyundrive.com/s/\\S{11})[\\S\\s]*", "$1");
             }
              Pattern pattern = Folder;
             Pattern pattern2 = AliPLink;
