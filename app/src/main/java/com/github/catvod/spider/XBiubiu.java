@@ -640,7 +640,7 @@ public class XBiubiu extends Spider {
             Pattern pattern = Pattern.compile(escapeExprSpecialWord(startFlag) + "([\\S\\s]*?)" + escapeExprSpecialWord(endFlag));
             Matcher matcher = pattern.matcher(content);
             while (matcher.find()) {
-                result.add(matcher.group(1).trim());
+                result.add(matcher.group(1).trim().replaceAll("\\s+", ""));
             }
         } catch (Throwable th) {
             th.printStackTrace();
