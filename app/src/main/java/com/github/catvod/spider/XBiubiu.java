@@ -206,7 +206,7 @@ public class XBiubiu extends Spider {
                     String link = subContent(jiequContent, getRuleVal("lianjieqian"), getRuleVal("lianjiehou")).get(0);
                     link = getRuleVal("ljqianzhui").isEmpty() ? (link + getRuleVal("ljhouzhui")) : (getRuleVal("ljqianzhui")) + link + getRuleVal("ljhouzhui");
                     String remark = !getRuleVal("fubiaotiqian").isEmpty() && !getRuleVal("fubiaotihou").isEmpty() ?
-                            removeHtml(subContent(jiequContent, getRuleVal("fubiaotiqian"), getRuleVal("fubiaotihou")).get(0)) : "";
+                            subContent(jiequContent, getRuleVal("fubiaotiqian"), getRuleVal("fubiaotihou")).get(0).replaceAll("\\s+", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "") : "";
                     JSONObject v = new JSONObject();
                     v.put("vod_id", title + "$$$" + pic + "$$$" + link);
                     v.put("vod_name", title);
@@ -640,7 +640,7 @@ public class XBiubiu extends Spider {
             Pattern pattern = Pattern.compile(escapeExprSpecialWord(startFlag) + "([\\S\\s]*?)" + escapeExprSpecialWord(endFlag));
             Matcher matcher = pattern.matcher(content);
             while (matcher.find()) {
-                result.add(matcher.group(1).replaceAll("\\s+", "").trim());
+                result.add(matcher.group(1).trim());
             }
         } catch (Throwable th) {
             th.printStackTrace();
