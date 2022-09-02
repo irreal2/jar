@@ -382,7 +382,7 @@ public class XPathRule {
     }
 
     public String getStartPage() {
-        return startPage;
+        return startPage = !startPage.isEmpty() ? startPage : "1";
     }
 
     public String getDirectPlay() {
