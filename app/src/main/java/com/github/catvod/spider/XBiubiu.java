@@ -131,8 +131,12 @@ public class XBiubiu extends Spider {
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
-        if (cateUrl.contains("||")) {
-            cateUrl = cateUrl.split("||")[0];
+        if (cateUrl.contains("||") {
+            if (pg.equals("1") && cateUrl.split("||")[1].startsWith("http") && getRuleVal("qishiye").isEmpty()) {
+                cateUrl = cateUrl.split("||")[1];
+            } else {
+                cateUrl = cateUrl.split("||")[0];
+            }
         }
         if (filter && isFilter && extend != null && extend.size() > 0) {
             for (Iterator<String> it = extend.keySet().iterator(); it.hasNext(); ) {
@@ -156,7 +160,6 @@ public class XBiubiu extends Spider {
         try {
             fetchRule();
             String webUrl;
-            String cateUrl = getRuleVal("分类页");
             if (isHome) {
                 webUrl = getRuleVal("url");
             } else {
@@ -169,11 +172,7 @@ public class XBiubiu extends Spider {
                     pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(qishiye));
                 }
                 if (getRuleVal("fenlei").isEmpty()) {
-                    if (cateUrl.contains("||") && pg.equals("1") && cateUrl.split("||")[1].startsWith("http") && qishiye.equals("nil")) {
-                       webUrl = cateUrl.split("||")[1].replace("{cateId}", tid);
-                    } else {
-                        webUrl = categoryUrl(tid, pg, filter, extend);
-                    }
+                    webUrl = categoryUrl(tid, pg, filter, extend);
                 } else {
                     webUrl = getRuleVal("url") + tid + pg + getRuleVal("houzhui");
                 }
@@ -206,7 +205,7 @@ public class XBiubiu extends Spider {
                     String link = subContent(jiequContent, getRuleVal("lianjieqian"), getRuleVal("lianjiehou")).get(0);
                     link = getRuleVal("ljqianzhui").isEmpty() ? (link + getRuleVal("ljhouzhui")) : (getRuleVal("ljqianzhui")) + link + getRuleVal("ljhouzhui");
                     String remark = !getRuleVal("fubiaotiqian").isEmpty() && !getRuleVal("fubiaotihou").isEmpty() ?
-                            subContent(jiequContent, getRuleVal("fubiaotiqian"), getRuleVal("fubiaotihou")).get(0).replaceAll("\\s+", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "") : "";
+                            subContent(jiequContent, getRuleVal("fubiaotiqian"), getRuleVal("fubiaotihou")).get(0).replaceAll("\\s+", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "").substring(0,9) : "";
                     JSONObject v = new JSONObject();
                     v.put("vod_id", title + "$$$" + pic + "$$$" + link);
                     v.put("vod_name", title);
