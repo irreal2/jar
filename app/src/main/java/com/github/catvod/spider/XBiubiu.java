@@ -436,7 +436,7 @@ public class XBiubiu extends Spider {
             String user = getRuleVal("User");
             String jieXi = getRuleVal("jiexi","").contains("url=") ? getRuleVal("jiexi") : "";
             result.put("parse", 1);
-            if (jiexi.contains("url=")) result.put("jx", "1");
+            if (jieXi.contains("url=")) result.put("jx", "1");
             result.put("playUrl", jieXi);
             if (!user.isEmpty()) {
                JSONObject headers = new JSONObject();
