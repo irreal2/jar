@@ -434,8 +434,9 @@ public class XBiubiu extends Spider {
             String webUrl = (id.startsWith("http") || id.startsWith("magnet")) ? id : getRuleVal("url") + id;
             JSONObject result = new JSONObject();
             String user = getRuleVal("User");
+            String jieXi = getRuleVal("jiexi","").contains("url=") ? getRuleVal("jiexi") : "";
             result.put("parse", 1);
-            result.put("playUrl", "");
+            result.put("playUrl", jieXi);
             if (!user.isEmpty()) {
                JSONObject headers = new JSONObject();
                user = user.contains("$") ? user.split("$")[1] : user;
