@@ -194,7 +194,7 @@ public class XBiubiu extends Spider {
             for (int i = 0; i < jiequContents.size(); i++) {
                 try {
                     String jiequContent = jiequContents.get(i);
-                    String title = removeHtml(subContent(jiequContent, getRuleVal("biaotiqian"), getRuleVal("biaotihou")).get(0));
+                    String title = removeHtml(subContent(jiequContent, getRuleVal("biaotiqian"), getRuleVal("biaotihou")).get(0)).replaceAll("\\&[a-zA-Z]{1,10};", "");
                     String pic = "";
                     String tupianqian = getRuleVal("tupianqian").toLowerCase();
                     if (tupianqian.startsWith("http://") || tupianqian.startsWith("https://")) {
@@ -285,7 +285,7 @@ public class XBiubiu extends Spider {
                         ArrayList<String> lastParseContents = subContent(parseJqContent, getRuleVal("bfyjiequshuzuqian"), getRuleVal("bfyjiequshuzuhou"));
                         List<String> vodItems = new ArrayList<>();
                         for (int j = 0; j < lastParseContents.size(); j++) {
-                            String title = subContent(lastParseContents.get(j), getRuleVal("bfbiaotiqian"), getRuleVal("bfbiaotihou")).get(0);
+                            String title = subContent(lastParseContents.get(j), getRuleVal("bfbiaotiqian"), getRuleVal("bfbiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
                             String link = subContent(lastParseContents.get(j), getRuleVal("bflianjieqian"), getRuleVal("bflianjiehou")).get(0);
                             String bfqianzhui = getRuleVal("bfqianzhui");
                             if (!bfqianzhui.isEmpty()) {
@@ -402,7 +402,7 @@ public class XBiubiu extends Spider {
                ArrayList<String> xljiequContents = subContent(xlparseContent, xljiequshuzuqian, xljiequshuzuhou);
                for (int i = 0; i < playList.size(); i++) {
                    try {
-                       String xltitle = subContent(xljiequContents.get(i), getRuleVal(xlbiaotiqian), getRuleVal(xlbiaotihou)).get(0);                     
+                       String xltitle = subContent(xljiequContents.get(i), getRuleVal(xlbiaotiqian), getRuleVal(xlbiaotihou)).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");                     
                        playFrom.add(xltitle);
                    } catch (Throwable th) {
                        th.printStackTrace();
@@ -493,7 +493,7 @@ public class XBiubiu extends Spider {
                 for (int i = 0; i < jiequContents.size(); i++) {
                     try {
                         String jiequContent = jiequContents.get(i);
-                        String title = subContent(jiequContent, getRuleVal("ssbiaotiqian"), getRuleVal("ssbiaotihou")).get(0);
+                        String title = subContent(jiequContent, getRuleVal("ssbiaotiqian"), getRuleVal("ssbiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
                         String pic = subContent(jiequContent, getRuleVal("sstupianqian"), getRuleVal("sstupianhou")).get(0);
                         pic = Misc.fixUrl(webUrl, pic);
                         String link = subContent(jiequContent, getRuleVal("sslianjieqian"), getRuleVal("sslianjiehou")).get(0);
