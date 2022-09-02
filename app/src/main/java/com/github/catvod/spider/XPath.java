@@ -105,10 +105,10 @@ public class XPath extends Spider {
         String webUrl = rule.getCateUrl();
         String sPg =rule.getStartPage();
         if (webUrl.contains("||")){
-            if (pg.equals("1") && webUrl.split("||")[1].startsWith("http") && (sPg.isEmpty() || sPg.equals("1"))) {
-            webUrl = webUrl.split("||")[1];
+            if (pg.equals("1") && webUrl.split("\\|\\|")[1].startsWith("http") && (sPg.isEmpty() || sPg.equals("1"))) {
+            webUrl = webUrl.split("\\|\\|")[1];
             } else {
-            webUrl = webUrl.split("||")[0];
+            webUrl = webUrl.split("\\|\\|")[0];
             }
         }
         return webUrl.replace("{cateId}", tid).replace("{catePg}", pg);

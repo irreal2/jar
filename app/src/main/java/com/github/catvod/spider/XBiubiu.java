@@ -133,10 +133,10 @@ public class XBiubiu extends Spider {
         String cateUrl = getRuleVal("分类页");
         String qishiye = getRuleVal("qishiye");
         if (cateUrl.contains("||")) {
-            if (pg.equals("1") && cateUrl.split("||")[1].startsWith("http") && (qishiye.isEmpty() || qishiye.equals("1"))) {
-                cateUrl = cateUrl.split("||")[1];
+            if (pg.equals("1") && cateUrl.split("\\|\\|")[1].startsWith("http") && (qishiye.isEmpty() || qishiye.equals("1"))) {
+                cateUrl = cateUrl.split("\\|\\|")[1];
             } else {
-                cateUrl = cateUrl.split("||")[0];
+                cateUrl = cateUrl.split("\\|\\|")[0];
             }
         }
         if (filter && isFilter && extend != null && extend.size() > 0) {
