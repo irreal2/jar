@@ -104,7 +104,7 @@ public class XPath extends Spider {
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String webUrl = rule.getCateUrl();
         if (webUrl.contains("||")){
-            if (pg.equals("1")) && webUrl.split("||")[1].startsWith("http") && rule.getStartPage().isEmpty()) {
+            if (pg.equals("1") && webUrl.split("||")[1].startsWith("http") && rule.getStartPage().isEmpty()) {
             webUrl = webUrl.split("||")[1];
             } else {
             webUrl = webUrl.split("||")[0];
