@@ -131,9 +131,9 @@ public class XBiubiu extends Spider {
 //获取分类页网址
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String cateUrl = getRuleVal("分类页");
-        String qishiye = getRuleVal("qishiye");
+        String qishiye = getRuleVal("qishiye","1");
         if (cateUrl.contains("||")) {
-            if (pg.equals("1") && cateUrl.split("\\|\\|")[1].startsWith("http") && (qishiye.isEmpty() || qishiye.equals("1"))) {
+            if (pg.equals(qishiye) && cateUrl.split("\\|\\|")[1].startsWith("http")) {
                 cateUrl = cateUrl.split("\\|\\|")[1];
             } else {
                 cateUrl = cateUrl.split("\\|\\|")[0];

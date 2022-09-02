@@ -103,9 +103,9 @@ public class XPath extends Spider {
 
     protected String categoryUrl(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         String webUrl = rule.getCateUrl();
-        String sPg =rule.getStartPage();
+        String sPg = rule.getStartPage();
         if (webUrl.contains("||")){
-            if (pg.equals("1") && webUrl.split("\\|\\|")[1].startsWith("http") && (sPg.isEmpty() || sPg.equals("1"))) {
+            if (pg.equals(sPg) && webUrl.split("\\|\\|")[1].startsWith("http")) {
             webUrl = webUrl.split("\\|\\|")[1];
             } else {
             webUrl = webUrl.split("\\|\\|")[0];
@@ -119,9 +119,7 @@ public class XPath extends Spider {
         try {
             fetchRule();
             String startPg = rule.getStartPage();
-            if (!startPg.isEmpty()) {
             pg = String.valueOf(Integer.parseInt(pg) + Integer.parseInt(startPg) - 1);
-            }
             String webUrl = categoryUrl(tid, pg, filter, extend);
             if (isHome) webUrl = rule.getHomeUrl();
             JSONArray videos = new JSONArray();
