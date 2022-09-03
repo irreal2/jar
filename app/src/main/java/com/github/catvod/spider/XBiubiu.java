@@ -715,6 +715,7 @@ public class XBiubiu extends Spider {
         } catch (Throwable th) {
             th.printStackTrace();
         }
+        if (result.isEmpty()) result.add("");
         return result;
     }
 
