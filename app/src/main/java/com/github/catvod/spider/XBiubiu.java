@@ -628,7 +628,7 @@ public class XBiubiu extends Spider {
                 int i = Integer.parseInt(yearD.split("-")[1]);
                 int j = Integer.parseInt(yearD.split("-")[0]);
                 String str;
-                for (i, i>=j, i--) {
+                for (i; i>=j; i--) {
                     if (i==j) {
                         str = str + String.valueOf(i) + "$" + String.valueOf(i);
 
@@ -678,7 +678,6 @@ public class XBiubiu extends Spider {
             rType.put("name",name);
             rType.put("value",lType);
             return rType;
-            }
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
