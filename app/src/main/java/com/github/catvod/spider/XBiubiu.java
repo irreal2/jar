@@ -655,7 +655,7 @@ public class XBiubiu extends Spider {
 /*            for (String cS: cateData.split("#")) {
                 cateType.add(cS.split("$")[1]);
             }
-*/            for (String fC: ["1", "2", "3", "4"]) { //cateType
+*/            for (String fC: {"1", "2", "3", "4"}) { //cateType
                 result.put(fC,lists);
             }
             return result;
@@ -676,7 +676,7 @@ public class XBiubiu extends Spider {
                 lType.put(vType);
                 vType = new JSONObject();
             }
-            if (typeD.equals("#") {
+            if (typeD.equals("#")) {
                 for (String cD: typeD.split("#")) {
                     vType.put("n",cD.split("$")[0]);
                     vType.put("v",cD.split("$")[1]);
