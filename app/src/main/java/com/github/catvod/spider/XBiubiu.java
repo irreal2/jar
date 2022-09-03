@@ -607,7 +607,7 @@ public class XBiubiu extends Spider {
             yearData = "2010-2022";
             String byData = getRuleVal("排序");
             if (byData.equals("1") || byData.isEmpty())
-            String byData = "时间$time#人气$hits#评分$score";
+            byData = "时间$time#人气$hits#评分$score";
            return creatFiter(classData,areaData,yearData,byData);
         } catch (Exception e) {
             SpiderDebug.log(e);
@@ -628,7 +628,7 @@ public class XBiubiu extends Spider {
                 int i = Integer.parseInt(yearD.split("-")[1]);
                 int j = Integer.parseInt(yearD.split("-")[0]);
                 String str;
-                for (i; i>=j; i--) {
+                for (; i>=j; i--) {
                     if (i==j) {
                         str = str + String.valueOf(i) + "$" + String.valueOf(i);
 
@@ -649,7 +649,7 @@ public class XBiubiu extends Spider {
                 cateType.add(cS.split("$")[1]);
             }
             for (String fC: cateType) {
-                result.put(fC,lists)；
+                result.put(fC,lists);
             }
             return result;
 
