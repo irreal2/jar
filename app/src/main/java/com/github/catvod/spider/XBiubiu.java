@@ -588,7 +588,7 @@ public class XBiubiu extends Spider {
                 case "数字": cate = cateData + suffix;
                 case "拼音": cate = pyCate + suffix;
             }
-            cateDta = cate;
+            cateData = cate;
             return cateData;
         } catch (Exception e) {
             SpiderDebug.log(e);
