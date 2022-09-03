@@ -608,7 +608,7 @@ public class XBiubiu extends Spider {
             String byData = getRuleVal("排序");
             if (byData.equals("1") || byData.isEmpty())
             byData = "时间$time#人气$hits#评分$score";
-           return creatFiter(classData,areaData,yearData,byData);
+           return creatFilter(classData,areaData,yearData,byData);
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
@@ -619,10 +619,10 @@ public class XBiubiu extends Spider {
         try {
             JSONArray lists = new JSONArray();
             if (!classD.equals("0") && classD.equals("$")) {
-                lists.add(getRType("class", "剧情", classD));
+                lists.put(getRType("class", "剧情", classD));
             }
             if (!areaD.equals("0") && areaD.equals("$")) {
-                lists.add(getRType("area", "地区", areaD));
+                lists.put(getRType("area", "地区", areaD));
             }
             if (!yearD.equals("0") && yearD.equals("-")) {
                 int i = Integer.parseInt(yearD.split("-")[1]);
@@ -637,10 +637,10 @@ public class XBiubiu extends Spider {
                     }
                 }
                 yearD = str;
-                lists.add(getRType("year", "年份", yearD));
+                lists.put(getRType("year", "年份", yearD));
             }
             if (!byD.equals("0") && byD.equals("$")) {
-                lists.add(getRType("by", "排序", byD));
+                lists.put(getRType("by", "排序", byD));
             }
 
             JSONObject result = new JSONObject();
@@ -665,12 +665,12 @@ public class XBiubiu extends Spider {
             JSONArray lType = new JSONArray();
             vTypes.put("n","全部");
             vType.put("v","");
-            lType.add(vType);
+            lType.put(vType);
             vType = null;
             for (String cD: typeD.split("#")) {
                 vType.put("n",cD.split("$")[0]);
                 vType.put("v",cD.split("$")[1]);
-                lType.add(vType);
+                lType.put(vType);
                 vType = null;
             }
             JSONObject rType = new JSONObject();
