@@ -629,6 +629,11 @@ public class XBiubiu extends Spider {
             if (!yearD.equals("0") && yearD.equals("-")) {
                 int i = Integer.parseInt(yearD.split("-")[1]);
                 int j = Integer.parseInt(yearD.split("-")[0]);
+                if (j>i) {
+                    int k = i;
+                    i = j;
+                    j = k;
+                }
                 String str = "";
                 for (; i>=j; i--) {
                     if (i==j) {
@@ -647,10 +652,10 @@ public class XBiubiu extends Spider {
 
             JSONObject result = new JSONObject();
             ArrayList<String> cateType = new ArrayList<>();
-            for (String cS: cateData.split("#")) {
+/*            for (String cS: cateData.split("#")) {
                 cateType.add(cS.split("$")[1]);
             }
-            for (String fC: cateType) {
+*/            for (String fC: ["1", "2", "3", "4"]) { //cateType
                 result.put(fC,lists);
             }
             return result;
@@ -671,11 +676,17 @@ public class XBiubiu extends Spider {
                 lType.put(vType);
                 vType = new JSONObject();
             }
-            for (String cD: typeD.split("#")) {
-                vType.put("n",cD.split("$")[0]);
-                vType.put("v",cD.split("$")[1]);
+            if (typeD.equals("#") {
+                for (String cD: typeD.split("#")) {
+                    vType.put("n",cD.split("$")[0]);
+                    vType.put("v",cD.split("$")[1]);
+                    lType.put(vType);
+                    vType = new JSONObject();
+                }
+            } else {
+                vType.put("n",typeD.split("$")[0]);
+                vType.put("v",typeD.split("$")[1]);
                 lType.put(vType);
-                vType = new JSONObject();
             }
             JSONObject rType = new JSONObject();
             rType.put("key",key);
