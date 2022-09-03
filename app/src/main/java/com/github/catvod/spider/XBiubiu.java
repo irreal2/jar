@@ -572,21 +572,23 @@ public class XBiubiu extends Spider {
     }
 
     private String getCate() {
-        String cate = getRuleVal("分类");
-        cateData = "电影$1#连续剧$2#综艺$3#动漫$4";
+        String cateData = "电影$1#连续剧$2#综艺$3#动漫$4";
+        String cate = getRuleVal("分类",cateData);
         String pyCate = "电影$dianying#连续剧$lianxuju#综艺$zongyi#动漫$dongman";
         String suffix = "", type = cate;
         try {
             if (cate.contains("$") && !cate.contains("||")) {
-                return cate;
+                cateData = cate;
+                return cateData;
             } else if (cate.contains("||")) {
                 type = cate.split("\\|\\|")[0];
                 suffix = "#" + cate.split("\\|\\|")[1];
             }
             switch (type) {
-                case "数字": cateData = cateData + suffix;
-                case "拼音": cateData = pyCate + suffix;
+                case "数字": cate = cateData + suffix;
+                case "拼音": cate = pyCate + suffix;
             }
+            cateDta = cate;
             return cateData;
         } catch (Exception e) {
             SpiderDebug.log(e);
