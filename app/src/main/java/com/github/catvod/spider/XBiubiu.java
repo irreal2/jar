@@ -610,7 +610,8 @@ public class XBiubiu extends Spider {
             String byData = getRuleVal("排序");
             if (byData.equals("1") || byData.isEmpty())
             byData = "时间$time#人气$hits#评分$score";
-           return creatFilter(classData,areaData,yearData,byData);
+            JSONObject result = creatFilter(classData,areaData,yearData,byData);
+           return result;
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
@@ -652,14 +653,12 @@ public class XBiubiu extends Spider {
 
             JSONObject result = new JSONObject();
             ArrayList<String> cateType = new ArrayList<>();
-/*            for (String cS: cateData.split("#")) {
+            for (String cS: cateData.split("#")) {
                 cateType.add(cS.split("$")[1]);
             }
-*/
-            String[] cateType = {"1", "2", "3", "4"};
-            for (String fC: cateType) { //
+            for (String fC: cateType) {
                 result.put(fC,lists);
-            }
+            } 
             return result;
 
         } catch (Exception e) {
