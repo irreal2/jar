@@ -644,7 +644,7 @@ public class XBiubiu extends Spider {
             }
 
             JSONObject result = new JSONObject();
-            String[] cateType;
+            ArrayList<String> cateType = new ArrayList<>();
             for (String cS: cateData.split("#")) {
                 cateType.add(cS.split("$")[1]);
             }
@@ -663,7 +663,7 @@ public class XBiubiu extends Spider {
         try {
             JSONObject vType = new JSONObject();
             JSONArray lType = new JSONArray();
-            vTypes.put("n","全部");
+            vType.put("n","全部");
             vType.put("v","");
             lType.put(vType);
             vType = null;
