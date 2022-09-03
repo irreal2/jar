@@ -185,7 +185,7 @@ public class XBiubiu extends Spider {
             for (int i = 0; i < jiequContents.size(); i++) {
                 try {
                     String jiequContent = jiequContents.get(i);
-                    String title = removeHtml(subContent(jiequContent, getRuleVal("biaotiqian"), getRuleVal("biaotihou")).get(0)).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                    String title = removeHtml(subContent(jiequContent, getRuleVal("biaotiqian"), getRuleVal("biaotihou")).get(0));
                     String pic = "";
                     String tupianqian = getRuleVal("tupianqian").toLowerCase();
                     if (tupianqian.startsWith("http://") || tupianqian.startsWith("https://")) {
@@ -276,7 +276,7 @@ public class XBiubiu extends Spider {
                         ArrayList<String> lastParseContents = subContent(parseJqContent, getRuleVal("bfyjiequshuzuqian"), getRuleVal("bfyjiequshuzuhou"));
                         List<String> vodItems = new ArrayList<>();
                         for (int j = 0; j < lastParseContents.size(); j++) {
-                            String title = subContent(lastParseContents.get(j), getRuleVal("bfbiaotiqian"), getRuleVal("bfbiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                            String title = subContent(lastParseContents.get(j), getRuleVal("bfbiaotiqian"), getRuleVal("bfbiaotihou")).get(0);
                             String link = subContent(lastParseContents.get(j), getRuleVal("bflianjieqian"), getRuleVal("bflianjiehou")).get(0);
                             String bfqianzhui = getRuleVal("bfqianzhui");
                             if (!bfqianzhui.isEmpty()) {
@@ -308,42 +308,42 @@ public class XBiubiu extends Spider {
 
             if (!getRuleVal("leixinqian").isEmpty() && !getRuleVal("leixinhou").isEmpty()) {
                 try {
-                    category = subContent(html, getRuleVal("leixinqian"), getRuleVal("leixinhou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    category = subContent(html, getRuleVal("leixinqian"), getRuleVal("leixinhou")).get(0);
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("niandaiqian").isEmpty() && !getRuleVal("niandaihou").isEmpty()) {
                 try {
-                    year = subContent(html, getRuleVal("niandaiqian"), getRuleVal("niandaihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    year = subContent(html, getRuleVal("niandaiqian"), getRuleVal("niandaihou")).get(0);
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("zhuangtaiqian").isEmpty() && !getRuleVal("zhuangtaihou").isEmpty()) {
                 try {
-                    remark = subContent(html, getRuleVal("zhuangtaiqian"), getRuleVal("zhuangtaihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                    remark = subContent(html, getRuleVal("zhuangtaiqian"), getRuleVal("zhuangtaihou")).get(0);
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("zhuyanqian").isEmpty() && !getRuleVal("zhuyanhou").isEmpty()) {
                 try {
-                    actor = subContent(html, getRuleVal("zhuyanqian"), getRuleVal("zhuyanhou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                    actor = subContent(html, getRuleVal("zhuyanqian"), getRuleVal("zhuyanhou")).get(0);
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("daoyanqian").isEmpty() && !getRuleVal("daoyanhou").isEmpty()) {
                 try {
-                    director = subContent(html, getRuleVal("daoyanqian"), getRuleVal("daoyanhou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                    director = subContent(html, getRuleVal("daoyanqian"), getRuleVal("daoyanhou")).get(0);
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("juqingqian").isEmpty() && !getRuleVal("juqinghou").isEmpty()) {
                 try {
-                    desc = subContent(html, getRuleVal("juqingqian"), getRuleVal("juqinghou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                    desc = subContent(html, getRuleVal("juqingqian"), getRuleVal("juqinghou")).get(0);
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
@@ -393,7 +393,7 @@ public class XBiubiu extends Spider {
                ArrayList<String> xljiequContents = subContent(xlparseContent, xljiequshuzuqian, xljiequshuzuhou);
                for (int i = 0; i < playList.size(); i++) {
                    try {
-                       String xltitle = subContent(xljiequContents.get(i), getRuleVal(xlbiaotiqian), getRuleVal(xlbiaotihou)).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");                     
+                       String xltitle = subContent(xljiequContents.get(i), getRuleVal(xlbiaotiqian), getRuleVal(xlbiaotihou)).get(0);                     
                        playFrom.add(xltitle);
                    } catch (Throwable th) {
                        th.printStackTrace();
@@ -486,7 +486,7 @@ public class XBiubiu extends Spider {
                 for (int i = 0; i < jiequContents.size(); i++) {
                     try {
                         String jiequContent = jiequContents.get(i);
-                        String title = subContent(jiequContent, getRuleVal("ssbiaotiqian"), getRuleVal("ssbiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                        String title = subContent(jiequContent, getRuleVal("ssbiaotiqian"), getRuleVal("ssbiaotihou")).get(0);
                         String pic = subContent(jiequContent, getRuleVal("sstupianqian"), getRuleVal("sstupianhou")).get(0);
                         pic = Misc.fixUrl(webUrl, pic);
                         String link = subContent(jiequContent, getRuleVal("sslianjieqian"), getRuleVal("sslianjiehou")).get(0);
@@ -494,7 +494,7 @@ public class XBiubiu extends Spider {
                         String remark = "";
                         if (!getRuleVal("ssfubiaotiqian").isEmpty() && !getRuleVal("ssfubiaotihou").isEmpty()) {
                             try {
-                                remark = subContent(jiequContent, getRuleVal("ssfubiaotiqian"), getRuleVal("ssfubiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                                remark = subContent(jiequContent, getRuleVal("ssfubiaotiqian"), getRuleVal("ssfubiaotihou")).get(0);
                             } catch (Exception e) {
                                 SpiderDebug.log(e);
                             }
@@ -596,7 +596,7 @@ public class XBiubiu extends Spider {
         return cateData;
     }
 
-    private JSONObject getFilterData() {
+    private String getFilterData() {
         try {
             String classData = getRuleVal("剧情");
             if (classData.equals("1") || classData.isEmpty()) 
@@ -611,14 +611,14 @@ public class XBiubiu extends Spider {
             if (byData.equals("1") || byData.isEmpty())
             byData = "时间$time#人气$hits#评分$score";
             JSONObject result = creatFilter(classData,areaData,yearData,byData);
-           return result;
+           return result.toString();
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return new JSONObject();
+        return "";
     }
 
-    private JSONObject creatFilter(String classD, String areaD, String yearD, String byD) {
+    private String creatFilter(String classD, String areaD, String yearD, String byD) {
         try {
             JSONArray lists = new JSONArray();
             if (!classD.equals("0") && classD.equals("$")) {
@@ -659,15 +659,15 @@ public class XBiubiu extends Spider {
             for (String fC: cateType) {
                 result.put(fC,lists);
             } 
-            return result;
+            return result.toString();
 
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return new JSONObject();
+        return "";
     }
 
-    private JSONObject getRType(String key, String name, String typeD) {
+    private String getRType(String key, String name, String typeD) {
         try {
             JSONObject vType = new JSONObject();
             JSONArray lType = new JSONArray();
@@ -693,11 +693,11 @@ public class XBiubiu extends Spider {
             rType.put("key",key);
             rType.put("name",name);
             rType.put("value",lType);
-            return rType;
+            return rType.toString();
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return new JSONObject();
+        return "";
     }
 
     private ArrayList<String> subContent(String content, String startFlag, String endFlag) {
@@ -710,7 +710,7 @@ public class XBiubiu extends Spider {
             Pattern pattern = Pattern.compile(escapeExprSpecialWord(startFlag) + "([\\S\\s]*?)" + escapeExprSpecialWord(endFlag));
             Matcher matcher = pattern.matcher(content);
             while (matcher.find()) {
-                result.add(matcher.group(1).replaceAll("\\s+", "").trim());
+                result.add(removeUnicode(matcher.group(1)).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("\\", "").replaceAll("\\s+", "").trim().replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", ""));
             }
         } catch (Throwable th) {
             th.printStackTrace();
