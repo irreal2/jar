@@ -612,7 +612,7 @@ public class XBiubiu extends Spider {
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return null;
+        return new JSONObject();
     }
 
     private JSONObject creatFilter(String classD, String areaD, String yearD, String byD) {
@@ -656,22 +656,24 @@ public class XBiubiu extends Spider {
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return null;
+        return new JSONObject();
     }
 
     private JSONObject getRType(String key, String name, String typeD) {
         try {
             JSONObject vType = new JSONObject();
             JSONArray lType = new JSONArray();
-            vType.put("n","全部");
-            vType.put("v","");
-            lType.put(vType);
-            vType = null;
+            if (!key.equals("by")) {
+                vType.put("n","全部");
+                vType.put("v","");
+                lType.put(vType);
+                vType = new JSONObject();
+            }
             for (String cD: typeD.split("#")) {
                 vType.put("n",cD.split("$")[0]);
                 vType.put("v",cD.split("$")[1]);
                 lType.put(vType);
-                vType = null;
+                vType = new JSONObject();
             }
             JSONObject rType = new JSONObject();
             rType.put("key",key);
@@ -681,7 +683,7 @@ public class XBiubiu extends Spider {
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return null;
+        return new JSONObject();
     }
 
     private ArrayList<String> subContent(String content, String startFlag, String endFlag) {
