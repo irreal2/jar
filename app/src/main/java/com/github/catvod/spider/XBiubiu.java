@@ -35,7 +35,7 @@ public class XBiubiu extends Spider {
      * 筛选配置
      */
     boolean isFilter = false;
-    private String cateDate;
+    private String cateData;
 
     /**
      * 拉取首页推荐
