@@ -682,7 +682,7 @@ public class XBiubiu extends Spider {
                 lType.put(vType);
                 vType = new JSONObject();
             }
-            if (typeD.equals("#")) {
+            if (typeD.contains("#")) {
                 for (String cD: typeD.split("#")) {
                     vType.put("n",cD.split("\\$")[0]);
                     vType.put("v",cD.split("\\$")[1]);
