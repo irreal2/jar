@@ -83,7 +83,7 @@ public class XBiubiu extends Spider {
             if (filter && filterJson != null) {
                 result.put("filters", filterJson);
             } else if (filter && getRuleVal(filterName).equals("1")) {
-                result.put("filters", getFilterData());
+                result.put("filters", new JSONObject(getFilterData()));
               }
             return result.toString();
         } catch (
@@ -610,7 +610,7 @@ public class XBiubiu extends Spider {
             String byData = getRuleVal("排序");
             if (byData.equals("1") || byData.isEmpty())
             byData = "时间$time#人气$hits#评分$score";
-            JSONObject result = creatFilter(classData,areaData,yearData,byData);
+            JSONObject result = new JSONObject(creatFilter(classData,areaData,yearData,byData));
            return result.toString();
         } catch (Exception e) {
             SpiderDebug.log(e);
@@ -622,10 +622,10 @@ public class XBiubiu extends Spider {
         try {
             JSONArray lists = new JSONArray();
             if (!classD.equals("0") && classD.equals("$")) {
-                lists.put(getRType("class", "剧情", classD));
+                lists.put( new JSONObject(getRType("class", "剧情", classD)));
             }
             if (!areaD.equals("0") && areaD.equals("$")) {
-                lists.put(getRType("area", "地区", areaD));
+                lists.put( new JSONObject(getRType("area", "地区", areaD)));
             }
             if (!yearD.equals("0") && yearD.equals("-")) {
                 int i = Integer.parseInt(yearD.split("-")[1]);
@@ -645,10 +645,10 @@ public class XBiubiu extends Spider {
                     }
                 }
                 yearD = str;
-                lists.put(getRType("year", "年份", yearD));
+                lists.put( new JSONObject(getRType("year", "年份", yearD)));
             }
             if (!byD.equals("0") && byD.equals("$")) {
-                lists.put(getRType("by", "排序", byD));
+                lists.put( new JSONObject(getRType("by", "排序", byD)));
             }
 
             JSONObject result = new JSONObject();
