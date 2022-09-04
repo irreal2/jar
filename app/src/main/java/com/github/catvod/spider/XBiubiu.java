@@ -35,6 +35,7 @@ public class XBiubiu extends Spider {
      * 筛选配置
      */
     boolean isFilter = false;
+    String cateDate;
 
     /**
      * 拉取首页推荐
@@ -583,21 +584,21 @@ public class XBiubiu extends Spider {
         String suffix = "", type = cate;
         try {
             if (cate.contains("$") && !cate.contains("||")) {
-                return cate;
+                return cateData = cate;
             } else if (cate.contains("||")) {
                 type = cate.split("\\|\\|")[0];
                 suffix = "#" + cate.split("\\|\\|")[1];
             }
             switch (type) {
-                case "数字": return numCate + suffix;
-                case "拼音": return pyCate + suffix;
-                case "英文": return enCate + suffix;
+                case "数字": return cateData = numCate + suffix;
+                case "拼音": return cateData = pyCate + suffix;
+                case "英文": return cateData = enCate + suffix;
             }
-            return numCate;
+            return cateData = numCate;
         } catch (Exception e) {
             SpiderDebug.log(e);
         }
-        return numCate;
+        return cateData = numCate;
     }
     private JSONObject getFilterData() {
         try {
@@ -613,7 +614,7 @@ public class XBiubiu extends Spider {
             String byData = getRuleVal("排序");
             if (byData.equals("1") || byData.isEmpty())
             byData = "时间$time#人气$hits#评分$score";
-            JSONObject result = new JSONObject(creatFilter(classData,areaData,yearData,byData));
+            JSONObject result = creatFilter(classData,areaData,yearData,byData);
            return result;
         } catch (Exception e) {
             SpiderDebug.log(e);
@@ -625,10 +626,10 @@ public class XBiubiu extends Spider {
         try {
             JSONArray lists = new JSONArray();
             if (!classD.equals("0") && classD.equals("$")) {
-                lists.put( new JSONObject(getRType("class", "剧情", classD)));
+                lists.put(getRType("class", "剧情", classD));
             }
             if (!areaD.equals("0") && areaD.equals("$")) {
-                lists.put( new JSONObject(getRType("area", "地区", areaD)));
+                lists.put(getRType("area", "地区", areaD));
             }
             if (!yearD.equals("0") && yearD.equals("-")) {
                 int i = Integer.parseInt(yearD.split("-")[1]);
@@ -648,10 +649,10 @@ public class XBiubiu extends Spider {
                     }
                 }
                 yearD = str;
-                lists.put( new JSONObject(getRType("year", "年份", yearD)));
+                lists.put(getRType("year", "年份", yearD));
             }
             if (!byD.equals("0") && byD.equals("$")) {
-                lists.put( new JSONObject(getRType("by", "排序", byD)));
+                lists.put(getRType("by", "排序", byD));
             }
 
             JSONObject result = new JSONObject();
