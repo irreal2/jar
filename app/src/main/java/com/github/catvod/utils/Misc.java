@@ -53,7 +53,7 @@ public class Misc {
 
     public static String fixUrl(String base, String src) {
         try {
-            src = src.replaceAll("\\\\");
+            src = src.replaceAll("\\\\","");
             if (src.startsWith("//")) {
                 Uri parse = Uri.parse(base);
                 src = parse.getScheme() + ":" + src;
