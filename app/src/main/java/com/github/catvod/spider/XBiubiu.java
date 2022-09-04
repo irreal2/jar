@@ -185,7 +185,7 @@ public class XBiubiu extends Spider {
             for (int i = 0; i < jiequContents.size(); i++) {
                 try {
                     String jiequContent = jiequContents.get(i);
-                    String title = removeHtml(subContent(jiequContent, getRuleVal("biaotiqian"), getRuleVal("biaotihou")).get(0)).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    String title = removeHtml(subContent(jiequContent, getRuleVal("biaotiqian"), getRuleVal("biaotihou")).get(0)).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                     String pic = "";
                     String tupianqian = getRuleVal("tupianqian").toLowerCase();
                     if (tupianqian.startsWith("http://") || tupianqian.startsWith("https://")) {
@@ -197,7 +197,7 @@ public class XBiubiu extends Spider {
                     String link = subContent(jiequContent, getRuleVal("lianjieqian"), getRuleVal("lianjiehou")).get(0);
                     link = getRuleVal("ljqianzhui").isEmpty() ? (link + getRuleVal("ljhouzhui")) : (getRuleVal("ljqianzhui")) + link + getRuleVal("ljhouzhui");
                     String remark = !getRuleVal("fubiaotiqian").isEmpty() && !getRuleVal("fubiaotihou").isEmpty() ?
-                            subContent(jiequContent, getRuleVal("fubiaotiqian"), getRuleVal("fubiaotihou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "") : "";
+                            subContent(jiequContent, getRuleVal("fubiaotiqian"), getRuleVal("fubiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "") : "";
                     remark = remark.length() > 10 ? remark.substring(0,10) : remark;
                     JSONObject v = new JSONObject();
                     v.put("vod_id", title + "$$$" + pic + "$$$" + link);
@@ -276,7 +276,7 @@ public class XBiubiu extends Spider {
                         ArrayList<String> lastParseContents = subContent(parseJqContent, getRuleVal("bfyjiequshuzuqian"), getRuleVal("bfyjiequshuzuhou"));
                         List<String> vodItems = new ArrayList<>();
                         for (int j = 0; j < lastParseContents.size(); j++) {
-                            String title = subContent(lastParseContents.get(j), getRuleVal("bfbiaotiqian"), getRuleVal("bfbiaotihou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                            String title = subContent(lastParseContents.get(j), getRuleVal("bfbiaotiqian"), getRuleVal("bfbiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                             String link = subContent(lastParseContents.get(j), getRuleVal("bflianjieqian"), getRuleVal("bflianjiehou")).get(0).replaceAll("\\\\", "");
                             String bfqianzhui = getRuleVal("bfqianzhui");
                             if (!bfqianzhui.isEmpty()) {
@@ -308,42 +308,42 @@ public class XBiubiu extends Spider {
 
             if (!getRuleVal("leixinqian").isEmpty() && !getRuleVal("leixinhou").isEmpty()) {
                 try {
-                    category = subContent(html, getRuleVal("leixinqian"), getRuleVal("leixinhou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    category = subContent(html, getRuleVal("leixinqian"), getRuleVal("leixinhou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("niandaiqian").isEmpty() && !getRuleVal("niandaihou").isEmpty()) {
                 try {
-                    year = subContent(html, getRuleVal("niandaiqian"), getRuleVal("niandaihou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    year = subContent(html, getRuleVal("niandaiqian"), getRuleVal("niandaihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("zhuangtaiqian").isEmpty() && !getRuleVal("zhuangtaihou").isEmpty()) {
                 try {
-                    remark = subContent(html, getRuleVal("zhuangtaiqian"), getRuleVal("zhuangtaihou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    remark = subContent(html, getRuleVal("zhuangtaiqian"), getRuleVal("zhuangtaihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("zhuyanqian").isEmpty() && !getRuleVal("zhuyanhou").isEmpty()) {
                 try {
-                    actor = subContent(html, getRuleVal("zhuyanqian"), getRuleVal("zhuyanhou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    actor = subContent(html, getRuleVal("zhuyanqian"), getRuleVal("zhuyanhou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("daoyanqian").isEmpty() && !getRuleVal("daoyanhou").isEmpty()) {
                 try {
-                    director = subContent(html, getRuleVal("daoyanqian"), getRuleVal("daoyanhou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    director = subContent(html, getRuleVal("daoyanqian"), getRuleVal("daoyanhou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
             }
             if (!getRuleVal("juqingqian").isEmpty() && !getRuleVal("juqinghou").isEmpty()) {
                 try {
-                    desc = subContent(html, getRuleVal("juqingqian"), getRuleVal("juqinghou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                    desc = subContent(html, getRuleVal("juqingqian"), getRuleVal("juqinghou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                 } catch (Exception e) {
                     SpiderDebug.log(e);
                 }
@@ -385,7 +385,7 @@ public class XBiubiu extends Spider {
                if (getRuleVal(xlshifouercijiequ).equals("1")) {
                    xljiequqian = getRuleVal(xljiequqian);
                    xljiequhou = getRuleVal(xljiequhou);
-                   xlparseContent = subContent(html, xljiequqian, xljiequhou).get(0);
+                   xlparseContent = subContent(html, xljiequqian, xljiequhou).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                }
 
                xljiequshuzuqian = getRuleVal(xljiequshuzuqian);
@@ -486,7 +486,7 @@ public class XBiubiu extends Spider {
                 for (int i = 0; i < jiequContents.size(); i++) {
                     try {
                         String jiequContent = jiequContents.get(i);
-                        String title = subContent(jiequContent, getRuleVal("ssbiaotiqian"), getRuleVal("ssbiaotihou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                        String title = subContent(jiequContent, getRuleVal("ssbiaotiqian"), getRuleVal("ssbiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                         String pic = subContent(jiequContent, getRuleVal("sstupianqian"), getRuleVal("sstupianhou")).get(0);
                         pic = Misc.fixUrl(webUrl, pic);
                         String link = subContent(jiequContent, getRuleVal("sslianjieqian"), getRuleVal("sslianjiehou")).get(0);
@@ -494,7 +494,7 @@ public class XBiubiu extends Spider {
                         String remark = "";
                         if (!getRuleVal("ssfubiaotiqian").isEmpty() && !getRuleVal("ssfubiaotihou").isEmpty()) {
                             try {
-                                remark = subContent(jiequContent, getRuleVal("ssfubiaotiqian"), getRuleVal("ssfubiaotihou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
+                                remark = subContent(jiequContent, getRuleVal("ssfubiaotiqian"), getRuleVal("ssfubiaotihou")).get(0).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
                                 remark = remark.length() > 10 ? remark.substring(0,10) : remark;
                            } catch (Exception e) {
                                 SpiderDebug.log(e);
@@ -573,8 +573,8 @@ public class XBiubiu extends Spider {
     }
 
     private String getCate() {
-        String cateData = "电影$1#连续剧$2#综艺$3#动漫$4";
-        String cate = getRuleVal("分类",cateData);
+        cateData = "电影$1#连续剧$2#综艺$3#动漫$4";
+        String cate = getRuleVal("分类");
         String pyCate = "电影$dianying#连续剧$lianxuju#综艺$zongyi#动漫$dongman";
         String suffix = "", type = cate;
         try {
@@ -714,7 +714,7 @@ public class XBiubiu extends Spider {
             Pattern pattern = Pattern.compile(escapeExprSpecialWord(startFlag) + "([\\S\\s]*?)" + escapeExprSpecialWord(endFlag));
             Matcher matcher = pattern.matcher(content);
             while (matcher.find()) {
-                result.add(matcher.group(1).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("\\s+", "").trim());
+                result.add(matcher.group(1).replaceAll("\\s+", "").trim());
             }
         } catch (Throwable th) {
             th.printStackTrace();
