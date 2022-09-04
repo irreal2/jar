@@ -191,6 +191,7 @@ public class XBiubiu extends Spider {
                 try {
                     String jiequContent = jiequContents.get(i);
                     String title = removeHtml(subContent(jiequContent, getRuleVal("biaotiqian"), getRuleVal("biaotihou")).get(0)).replaceAll("\\&[a-zA-Z]{1,10};", "");
+                    if (title.matches("\\S{1,2}页")) break;
                     String pic = "";
                     String tupianqian = getRuleVal("tupianqian").toLowerCase();
                     if (tupianqian.startsWith("http://") || tupianqian.startsWith("https://")) {
