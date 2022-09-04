@@ -626,13 +626,13 @@ public class XBiubiu extends Spider {
     private JSONObject creatFilter(String classD, String areaD, String yearD, String byD) {
         try {
             JSONArray lists = new JSONArray();
-            if (!classD.equals("0") && classD.equals("$")) {
+            if (!classD.equals("0") && classD.contains("$")) {
                 lists.put(getRType("class", "剧情", classD));
             }
-            if (!areaD.equals("0") && areaD.equals("$")) {
+            if (!areaD.equals("0") && areaD.contains("$")) {
                 lists.put(getRType("area", "地区", areaD));
             }
-            if (!yearD.equals("0") && yearD.equals("-")) {
+            if (!yearD.equals("0") && yearD.contains("-")) {
                 int i = Integer.parseInt(yearD.split("-")[1]);
                 int j = Integer.parseInt(yearD.split("-")[0]);
                 if (j>i) {
@@ -652,14 +652,14 @@ public class XBiubiu extends Spider {
                 yearD = str;
                 lists.put(getRType("year", "年份", yearD));
             }
-            if (!byD.equals("0") && byD.equals("$")) {
+            if (!byD.equals("0") && byD.contains("$")) {
                 lists.put(getRType("by", "排序", byD));
             }
 
             JSONObject result = new JSONObject();
             ArrayList<String> cateType = new ArrayList<>();
             for (String cS: cateData.split("#")) {
-                cateType.add(cS.split("$")[1]);
+                cateType.add(cS.split("\\$")[1]);
             }
             for (String fC: cateType) {
                 result.put(fC,lists);
@@ -684,14 +684,14 @@ public class XBiubiu extends Spider {
             }
             if (typeD.equals("#")) {
                 for (String cD: typeD.split("#")) {
-                    vType.put("n",cD.split("$")[0]);
-                    vType.put("v",cD.split("$")[1]);
+                    vType.put("n",cD.split("\\$")[0]);
+                    vType.put("v",cD.split("\\$")[1]);
                     lType.put(vType);
                     vType = new JSONObject();
                 }
             } else {
-                vType.put("n",typeD.split("$")[0]);
-                vType.put("v",typeD.split("$")[1]);
+                vType.put("n",typeD.split("\\$")[0]);
+                vType.put("v",typeD.split("\\$")[1]);
                 lType.put(vType);
             }
             JSONObject rType = new JSONObject();
