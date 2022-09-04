@@ -277,7 +277,7 @@ public class XBiubiu extends Spider {
                         List<String> vodItems = new ArrayList<>();
                         for (int j = 0; j < lastParseContents.size(); j++) {
                             String title = subContent(lastParseContents.get(j), getRuleVal("bfbiaotiqian"), getRuleVal("bfbiaotihou")).get(0).replaceAll("<[^>]*>", "").replaceAll("[(/>)<]", "");
-                            String link = subContent(lastParseContents.get(j), getRuleVal("bflianjieqian"), getRuleVal("bflianjiehou")).get(0);
+                            String link = subContent(lastParseContents.get(j), getRuleVal("bflianjieqian"), getRuleVal("bflianjiehou")).get(0).replaceAll("\\\\", "");
                             String bfqianzhui = getRuleVal("bfqianzhui");
                             if (!bfqianzhui.isEmpty()) {
                                 link = bfqianzhui + link;
@@ -714,7 +714,7 @@ public class XBiubiu extends Spider {
             Pattern pattern = Pattern.compile(escapeExprSpecialWord(startFlag) + "([\\S\\s]*?)" + escapeExprSpecialWord(endFlag));
             Matcher matcher = pattern.matcher(content);
             while (matcher.find()) {
-                result.add(removeUnicode(matcher.group(1)).replaceAll("\\\\", "").replaceAll("\\s+", "").trim());
+                result.add(matcher.group(1).replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll("\\s+", "").trim());
             }
         } catch (Throwable th) {
             th.printStackTrace();
